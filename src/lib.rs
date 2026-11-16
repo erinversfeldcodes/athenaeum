@@ -51,10 +51,10 @@ pub mod manifest {
 /// The gate result: what a gate reports when it is run.
 pub mod gate_result {
     /// The schema, as JSON Schema text.
-    pub const SCHEMA: &str = "";
+    pub const SCHEMA: &str = include_str!("../contracts/gate-result/schema.json");
 
     /// A worked example: a gate that passed.
-    pub const EXAMPLE: &str = "";
+    pub const EXAMPLE: &str = include_str!("../contracts/gate-result/example.json");
 
     /// One gate result and what a reader must do with it.
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -67,6 +67,8 @@ pub mod gate_result {
         pub expectation: crate::Expectation,
     }
 
-    /// Every case.
-    pub const CASES: &[Case] = &[];
+    /// Every case: the worked example, each file under
+    /// `contracts/gate-result/cases/valid` and each under `.../invalid`.
+    /// Generated from those directories by `build.rs`.
+    pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/gate_result_cases.rs"));
 }
