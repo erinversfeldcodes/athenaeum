@@ -62,7 +62,7 @@ wording_of() {
     minimum) echo 'is less than the minimum' ;;
     minItems) echo 'should be non-empty|is too short' ;;
     minProperties) echo 'should be non-empty|does not have enough properties' ;;
-    falseSchema) echo 'False schema does not allow' ;;
+    not) echo 'should not be valid under' ;;
     *) return 1 ;;
   esac
 }

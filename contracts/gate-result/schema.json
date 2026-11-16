@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/erinversfeldcodes/athenaeum/blob/main/contracts/gate-result/schema.json",
+  "title": "Gate result, version 0",
+  "description": "What a gate reports when it is run. Written as JSON. Every key is listed here: an unknown key is an error, so a misspelt one fails instead of being ignored. The outcome decides which other fields must be present, so a result cannot contradict itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "gate", "outcome", "command", "duration_ms"],
+  "properties": {
+    "schema_version": {
+      "description": "The version of this schema the result follows. A reader that does not know the version must refuse the result.",
+      "const": 0
+    },
+    "gate": {
+      "description": "The name the gate has in the manifest.",
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome": {
+      "description": "`passed`: the command exited 0. `failed`: it exited non-zero. `timed_out`: it was stopped for running longer than the gate allows, so it has no exit code of its own. `skipped`: it was not run, and the reason says why.",
+      "enum": ["passed", "failed", "timed_out", "skipped"]
+    },
+    "command": {
+      "description": "The program and arguments that were run, as a list, with any toolchain wrapper already applied. For a skipped gate, the command that would have been run.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "exit_code": {
+      "description": "The command's exit code. Present for `passed` and `failed`, absent otherwise.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "duration_ms": {
+      "description": "How long the gate took, in milliseconds. Zero for a skipped gate.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "reason": {
+      "description": "Why the gate was skipped. Required for `skipped`.",
+      "type": "string",
+      "minLength": 1
+    },
+    "report": {
+      "description": "The gate's own structured result, when the manifest says it gives one (`result = \"json\"`). Its shape belongs to the gate, not to this schema.",
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["outcome"], "properties": { "outcome": { "const": "passed" } } },
+      "then": { "required": ["exit_code"], "properties": { "exit_code": { "const": 0 } } }
+    },
+    {
+      "if": { "required": ["outcome"], "properties": { "outcome": { "const": "failed" } } },
+      "then": { "required": ["exit_code"], "properties": { "exit_code": { "minimum": 1 } } }
+    },
+    {
+      "if": { "required": ["outcome"], "properties": { "outcome": { "const": "timed_out" } } },
+      "then": { "not": { "required": ["exit_code"] } }
+    },
+    {
+      "if": { "required": ["outcome"], "properties": { "outcome": { "const": "skipped" } } },
+      "then": { "required": ["reason"], "not": { "required": ["exit_code"] } }
+    }
+  ]
+}
