@@ -79,11 +79,13 @@ pub mod lock {
     pub use crate::manifest::Case;
 
     /// The schema, as JSON Schema text.
-    pub const SCHEMA: &str = "";
+    pub const SCHEMA: &str = include_str!("../contracts/lock/schema.json");
 
     /// A worked example.
-    pub const EXAMPLE: &str = "";
+    pub const EXAMPLE: &str = include_str!("../contracts/lock/example.toml");
 
-    /// Every case.
-    pub const CASES: &[Case] = &[];
+    /// Every case: the worked example, each file under
+    /// `contracts/lock/cases/valid` and each under `.../invalid`. Generated
+    /// from those directories by `build.rs`.
+    pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/lock_cases.rs"));
 }
