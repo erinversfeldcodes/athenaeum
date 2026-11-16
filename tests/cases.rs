@@ -15,7 +15,10 @@ fn names_in(directory: &str) -> BTreeSet<String> {
     std::fs::read_dir(&directory)
         .unwrap_or_else(|error| panic!("{} should be readable: {error}", directory.display()))
         .map(|entry| entry.expect("a directory entry").path())
-        .filter(|path| path.extension().is_some_and(|extension| extension == "toml"))
+        .filter(|path| {
+            path.extension()
+                .is_some_and(|extension| extension == "toml")
+        })
         .map(|path| {
             path.file_stem()
                 .expect("a case file to have a name")
