@@ -1,0 +1,7 @@
+# violates: $.components propertyNames
+# Names appear in commands, labels and paths, so they are lower-case slugs.
+schema_version = 0
+
+[components.Web_App]
+root = "."
+paths = ["**"]

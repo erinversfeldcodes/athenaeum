@@ -5,9 +5,9 @@
 Athenaeum is the content half of my agent harness. It holds what an agent
 needs to be told in order to plan, build, review and finish a piece of work,
 written so that it is true in any repository and not only the one it came from.
-It contains no code.
+It contains no code beyond the scripts that check its own content.
 
-> **Status: empty. The layout below is planned and nothing has been moved in yet.**
+> **Status: the manifest schema is defined. No skills, contracts or packs have been moved in yet.**
 > The source is publicly visible under a restrictive licence. You may read it,
 > but may not use, copy or distribute it. See [LICENSE](./LICENSE).
 
@@ -27,14 +27,16 @@ Athenaeum separates the three:
 | Knowledge of a stack | A migration that adds an index to a large table does so concurrently. | A pack, here |
 | A fact about one product | Which module owns account deletion. | The managed repository's manifest or its own documents |
 
-## Planned layout
+## Layout
 
 ```
-skills/      one directory per skill, each a SKILL.md
-contracts/   the specialist report, reviewer verdict, finding and gate result
-packs/       one directory per stack or cross-cutting concern
-manifest/    the manifest schema and a worked example
+manifest/    the manifest schema, a worked example and its conformance cases
+skills/      planned: one directory per skill, each a SKILL.md
+contracts/   planned: the specialist report, reviewer verdict, finding and gate result
+packs/       planned: one directory per stack or cross-cutting concern
 ```
+
+Start with [`manifest/`](./manifest/README.md).
 
 - A **skill** teaches one method and is small enough that a run either loaded
   it or did not. That is what lets Hephaestium measure whether it matters.

@@ -1,0 +1,6 @@
+# violates: $.components.app required
+# Without paths, nothing can tell which component a change belongs to.
+schema_version = 0
+
+[components.app]
+root = "."

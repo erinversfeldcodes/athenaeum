@@ -1,0 +1,11 @@
+# violates: $.gates.regression.result enum
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.regression]
+run = ["just", "ci"]
+timeout_seconds = 60
+result = "text"

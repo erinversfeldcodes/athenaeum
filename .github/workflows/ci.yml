@@ -50,9 +50,23 @@ jobs:
         if: github.event_name == 'push'
         run: git log -1 --format=%s | scripts/release.sh lint
 
+  # check-jsonschema is the reference validator the cases are graded with.
+  # Pinned, because a validator that rewords an error would fail every case.
+  manifest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the reference validator
+        run: pipx install check-jsonschema==0.33.0
+      - name: The schema accepts and rejects what its cases say it must
+        run: bash scripts/check-manifest-cases.sh
+
   ci:
     if: always()
-    needs: [docs, commits]
+    needs: [docs, commits, manifest]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

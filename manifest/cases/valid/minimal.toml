@@ -1,0 +1,6 @@
+# The least a manifest may say: which schema it follows and one component.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]

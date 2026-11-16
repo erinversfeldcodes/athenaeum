@@ -1,0 +1,10 @@
+# violates: $.gates.regression.timeout_seconds minimum
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.regression]
+run = ["just", "ci"]
+timeout_seconds = 0

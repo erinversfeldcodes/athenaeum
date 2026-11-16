@@ -1,0 +1,12 @@
+# violates: $.gates.regression.run type
+# A command is a list of arguments. A string would need a shell to split it,
+# and then quoting decides what runs.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.regression]
+run = "just ci"
+timeout_seconds = 60

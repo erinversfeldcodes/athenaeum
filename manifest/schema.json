@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/erinversfeldcodes/athenaeum/blob/main/manifest/schema.json",
+  "title": "Manifest, version 0",
+  "description": "How a managed repository describes itself. Written as TOML. Every key is listed here: an unknown key is an error, so a misspelt one fails instead of being ignored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "components"],
+  "properties": {
+    "schema_version": {
+      "description": "The version of this schema the manifest follows. A reader that does not know the version must refuse the manifest.",
+      "const": 0
+    },
+    "toolchain": { "$ref": "#/$defs/toolchain" },
+    "components": {
+      "description": "The buildable parts of the repository, keyed by name. At least one.",
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/name" },
+      "additionalProperties": { "$ref": "#/$defs/component" }
+    },
+    "gates": {
+      "description": "The commands that decide whether a change may proceed, keyed by name.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/name" },
+      "additionalProperties": { "$ref": "#/$defs/gate" }
+    },
+    "docs": { "$ref": "#/$defs/docs" }
+  },
+  "$defs": {
+    "name": {
+      "description": "A lower-case slug. Names appear in commands, labels and paths.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "command": {
+      "description": "A program and its arguments, as a list. Never a single string: a string needs a shell to split it, and then quoting decides what runs.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "path": {
+      "description": "A path or glob relative to the repository root, with forward slashes. It may not be absolute and may not contain a `..` segment, so it means the same thing in every checkout and cannot reach outside the repository.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(^|/)\\.\\.(/|$))[^\\\\]+$"
+    },
+    "toolchain": {
+      "description": "How to enter the repository's pinned toolchain.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wrapper"],
+      "properties": {
+        "wrapper": {
+          "description": "Put in front of every command in this manifest.",
+          "$ref": "#/$defs/command"
+        },
+        "inside_env": {
+          "description": "The name of an environment variable that is set when the caller is already inside the toolchain. When it is set, the wrapper is not applied.",
+          "type": "string",
+          "pattern": "^[A-Z_][A-Z0-9_]*$"
+        }
+      }
+    },
+    "component": {
+      "description": "One buildable part of the repository.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "paths"],
+      "properties": {
+        "pack": {
+          "description": "The Athenaeum pack that holds this component's stack knowledge.",
+          "$ref": "#/$defs/name"
+        },
+        "root": {
+          "description": "The directory its commands run in.",
+          "$ref": "#/$defs/path"
+        },
+        "paths": {
+          "description": "Globs for the files that belong to it. A change is attributed to a component by these.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "generated": {
+          "description": "Globs for files that are generated and must not be edited by hand.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "test": {
+          "description": "Runs its tests.",
+          "$ref": "#/$defs/command"
+        },
+        "lint": {
+          "description": "Its format and lint checks, each a command that changes nothing and fails on a finding.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/command" }
+        }
+      }
+    },
+    "gate": {
+      "description": "A command, run from the repository root, that decides whether a change may proceed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run", "timeout_seconds"],
+      "properties": {
+        "run": { "$ref": "#/$defs/command" },
+        "when_paths": {
+          "description": "Globs. The gate applies only to a change that touches a matching file. Absent means it applies to every change.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "timeout_seconds": {
+          "description": "How long the gate may run before it is stopped and counted as failed. Required, because a gate with no limit can hold a workload open for ever.",
+          "type": "integer",
+          "minimum": 1
+        },
+        "result": {
+          "description": "How the gate reports. `exit-code`, the default: zero is a pass. `json`: the command also writes a structured result that the caller reads.",
+          "enum": ["exit-code", "json"]
+        }
+      }
+    },
+    "docs": {
+      "description": "Where the repository keeps the documents a skill may need. A skill asks for a document by these names and never hard-codes a path.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "architecture": { "description": "The architecture document.", "$ref": "#/$defs/path" },
+        "stories": {
+          "description": "Files or directories holding user stories.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "mapping": { "description": "The document that maps stories to the code that implements them.", "$ref": "#/$defs/path" },
+        "decisions": { "description": "The directory of decision records.", "$ref": "#/$defs/path" },
+        "goals": {
+          "description": "Documents stating what the product is for and what it has ruled out.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/path" }
+        }
+      }
+    }
+  }
+}
