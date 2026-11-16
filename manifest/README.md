@@ -53,7 +53,8 @@ Being rejected is not enough: a case rejected for the wrong reason would keep
 passing if its rule were deleted.
 
 Any other reader of manifests, Hephaestium's command-line tool included, is
-graded against the same cases.
+graded against the same cases. A reader written in Rust gets them from the
+crate at the repository root, which generates its list from this directory.
 
 ## Changing the schema
 
