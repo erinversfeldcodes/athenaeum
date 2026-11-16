@@ -1,0 +1,7 @@
+{
+  "schema_version": 0,
+  "gate": "preview",
+  "outcome": "timed_out",
+  "command": ["just", "preview-and-drive"],
+  "duration_ms": 3600000
+}

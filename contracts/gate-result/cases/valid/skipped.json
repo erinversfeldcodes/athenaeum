@@ -1,0 +1,8 @@
+{
+  "schema_version": 0,
+  "gate": "fresh-database",
+  "outcome": "skipped",
+  "reason": "no changed file matches the gate's when_paths",
+  "command": ["just", "fresh-database"],
+  "duration_ms": 0
+}
