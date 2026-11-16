@@ -8,7 +8,7 @@ written so that it is true in any repository and not only the one it came from.
 It contains no logic: the only code is the scripts that check its own content
 and a crate that hands its contracts, unchanged, to a reader that pins them.
 
-> **Status: the manifest schema is defined. No skills, contracts or packs have been moved in yet.**
+> **Status: the manifest schema is defined and the first skill has been moved in. No contracts or packs yet.**
 > The source is publicly visible under a restrictive licence. You may read it,
 > but may not use, copy or distribute it. See [LICENSE](./LICENSE).
 
@@ -32,12 +32,12 @@ Athenaeum separates the three:
 
 ```
 manifest/    the manifest schema, a worked example and its conformance cases
-skills/      planned: one directory per skill, each a SKILL.md
+skills/      one directory per skill, each a SKILL.md, and the conventions they share
 contracts/   planned: the specialist report, reviewer verdict, finding and gate result
 packs/       planned: one directory per stack or cross-cutting concern
 ```
 
-Start with [`manifest/`](./manifest/README.md).
+Start with [`manifest/`](./manifest/README.md), then [`skills/`](./skills/README.md).
 
 ## Pinning it from Rust
 
