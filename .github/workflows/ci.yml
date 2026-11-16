@@ -64,9 +64,28 @@ jobs:
       - name: The schema accepts and rejects what its cases say it must
         run: bash scripts/check-manifest-cases.sh
 
+  # The crate hands the schema and its cases to readers written in Rust.
+  # rustup reads rust-toolchain.toml, so CI and a developer's machine install
+  # the same compiler from the same file.
+  rust:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned toolchain
+        run: rustup toolchain install
+      - name: Formatted
+        run: cargo fmt --all --check
+      - name: Linted, warnings denied
+        run: cargo clippy --all-targets --locked -- -D warnings
+      - name: The crate exposes every case file and what it states
+        run: cargo test --locked
+
   ci:
     if: always()
-    needs: [docs, commits, manifest]
+    needs: [docs, commits, manifest, rust]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
