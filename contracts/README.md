@@ -6,6 +6,7 @@ whatever produces it and whatever reads it agree.
 | Contract | What crosses | Written as |
 |---|---|---|
 | [`gate-result`](./gate-result/schema.json) | What a gate reports when it is run | JSON |
+| [`lock`](./lock/schema.json) | The Athenaeum revision a repository pins, and the skills it takes | TOML |
 
 The manifest is a contract too, and lives in [`manifest/`](../manifest/README.md)
 because it is the one a person writes by hand.
