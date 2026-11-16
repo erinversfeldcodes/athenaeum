@@ -1,0 +1,6 @@
+# violates: $.rev pattern
+schema_version = 0
+source = "https://github.com/erinversfeldcodes/athenaeum"
+rev = "0.6.0"
+commit = "a5f4489d1a6b0e3c7f2b9d8e4c5a6b7c8d9e0f12"
+skills = ["scope-request"]

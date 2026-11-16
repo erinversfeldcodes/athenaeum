@@ -1,0 +1,7 @@
+schema_version = 0
+
+source = "file:///home/dev/athenaeum"
+rev = "v10.2.3"
+commit = "0000000000000000000000000000000000000000"
+skills = ["scope-request"]
+harnesses = ["claude-code"]
