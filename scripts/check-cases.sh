@@ -3,6 +3,7 @@
 #
 #   check-cases.sh manifest
 #   check-cases.sh gate-result
+#   check-cases.sh lock
 #
 # The example and every file under cases/valid must be accepted. Every file
 # under cases/invalid must be rejected, for exactly the one reason it states:
@@ -37,6 +38,12 @@ case $contract in
     cases=manifest/cases
     extension=toml
     ;;
+  lock)
+    schema=contracts/lock/schema.json
+    example=contracts/lock/example.toml
+    cases=contracts/lock/cases
+    extension=toml
+    ;;
   gate-result)
     schema=contracts/gate-result/schema.json
     example=contracts/gate-result/example.json
@@ -44,7 +51,7 @@ case $contract in
     extension=json
     ;;
   *)
-    echo "usage: check-cases.sh manifest|gate-result" >&2
+    echo "usage: check-cases.sh manifest|gate-result|lock" >&2
     exit 2
     ;;
 esac
@@ -60,7 +67,8 @@ wording_of() {
     enum) echo 'is not one of' ;;
     pattern | propertyNames) echo 'does not match' ;;
     minimum) echo 'is less than the minimum' ;;
-    minItems) echo 'should be non-empty|is too short' ;;
+    minItems | minLength) echo 'should be non-empty|is too short' ;;
+    uniqueItems) echo 'has non-unique elements' ;;
     minProperties) echo 'should be non-empty|does not have enough properties' ;;
     not) echo 'should not be valid under' ;;
     *) return 1 ;;

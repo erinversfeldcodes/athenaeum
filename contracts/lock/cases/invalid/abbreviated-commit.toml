@@ -1,0 +1,7 @@
+# violates: $.commit pattern
+# An abbreviated commit is ambiguous, and a pin that can resolve to two things is not a pin.
+schema_version = 0
+source = "https://github.com/erinversfeldcodes/athenaeum"
+rev = "v0.6.0"
+commit = "a5f4489"
+skills = ["scope-request"]

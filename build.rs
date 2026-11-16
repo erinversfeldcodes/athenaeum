@@ -50,6 +50,14 @@ const CONTRACTS: &[Contract] = &[
         statement: Statement::FirstLine,
     },
     Contract {
+        output: "lock_cases.rs",
+        directory: "contracts/lock",
+        example: "example.toml",
+        extension: "toml",
+        field: "toml",
+        statement: Statement::FirstLine,
+    },
+    Contract {
         output: "gate_result_cases.rs",
         directory: "contracts/gate-result",
         example: "example.json",

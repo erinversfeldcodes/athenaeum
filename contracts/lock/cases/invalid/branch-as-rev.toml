@@ -1,0 +1,7 @@
+# violates: $.rev pattern
+# A branch moves. Only a release tag, with the commit it resolved to, is a pin.
+schema_version = 0
+source = "https://github.com/erinversfeldcodes/athenaeum"
+rev = "main"
+commit = "a5f4489d1a6b0e3c7f2b9d8e4c5a6b7c8d9e0f12"
+skills = ["scope-request"]
