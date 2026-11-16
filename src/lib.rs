@@ -7,6 +7,20 @@
 //! a case then fails its own tests, at build time, instead of disagreeing
 //! with a repository in the field.
 
+/// What a reader must do with a case, whichever contract it belongs to.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Expectation {
+    /// The instance is valid.
+    Accepted,
+    /// The instance breaks exactly one rule.
+    Rejected {
+        /// Where in the instance the rule is broken, as `$.a.b[0]`.
+        path: &'static str,
+        /// The JSON Schema keyword that rejects it.
+        keyword: &'static str,
+    },
+}
+
 /// The manifest: the file in which a managed repository describes itself.
 pub mod manifest {
     /// The schema, as JSON Schema text.
@@ -26,22 +40,33 @@ pub mod manifest {
         pub expectation: Expectation,
     }
 
-    /// What a reader must do with a case.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    pub enum Expectation {
-        /// The manifest is valid.
-        Accepted,
-        /// The manifest breaks exactly one rule.
-        Rejected {
-            /// Where in the manifest the rule is broken, as `$.a.b[0]`.
-            path: &'static str,
-            /// The JSON Schema keyword that rejects it.
-            keyword: &'static str,
-        },
-    }
+    pub use crate::Expectation;
 
     /// Every case: the worked example, each file under `manifest/cases/valid`
     /// and each file under `manifest/cases/invalid`. Generated from those
     /// directories by `build.rs`.
     pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/manifest_cases.rs"));
+}
+
+/// The gate result: what a gate reports when it is run.
+pub mod gate_result {
+    /// The schema, as JSON Schema text.
+    pub const SCHEMA: &str = "";
+
+    /// A worked example: a gate that passed.
+    pub const EXAMPLE: &str = "";
+
+    /// One gate result and what a reader must do with it.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub struct Case {
+        /// The case's file name without its extension.
+        pub name: &'static str,
+        /// The gate result itself, as JSON text.
+        pub json: &'static str,
+        /// What a reader must do with it.
+        pub expectation: crate::Expectation,
+    }
+
+    /// Every case.
+    pub const CASES: &[Case] = &[];
 }

@@ -8,7 +8,8 @@
 use std::collections::BTreeSet;
 use std::path::Path;
 
-use athenaeum::manifest::{CASES, Expectation};
+use athenaeum::Expectation;
+use athenaeum::manifest::CASES;
 
 fn names_in(directory: &str) -> BTreeSet<String> {
     let directory = Path::new(env!("CARGO_MANIFEST_DIR")).join(directory);
