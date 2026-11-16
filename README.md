@@ -5,7 +5,8 @@
 Athenaeum is the content half of my agent harness. It holds what an agent
 needs to be told in order to plan, build, review and finish a piece of work,
 written so that it is true in any repository and not only the one it came from.
-It contains no code beyond the scripts that check its own content.
+It contains no logic: the only code is the scripts that check its own content
+and a crate that hands its contracts, unchanged, to a reader that pins them.
 
 > **Status: the manifest schema is defined. No skills, contracts or packs have been moved in yet.**
 > The source is publicly visible under a restrictive licence. You may read it,
@@ -37,6 +38,21 @@ packs/       planned: one directory per stack or cross-cutting concern
 ```
 
 Start with [`manifest/`](./manifest/README.md).
+
+## Pinning it from Rust
+
+A reader written in Rust takes Athenaeum at a tag as a build dependency:
+
+```toml
+[dependencies]
+athenaeum = { git = "https://github.com/erinversfeldcodes/athenaeum", tag = "v0.3.0" }
+```
+
+`athenaeum::manifest::SCHEMA` is the schema text, and
+`athenaeum::manifest::CASES` is every case with what it expects. The reader
+compiles the schema in and runs the cases as its own tests, so it cannot
+disagree with the contract it was built for without failing its build. The
+crate's own version is never bumped; the tag is the version.
 
 - A **skill** teaches one method and is small enough that a run either loaded
   it or did not. That is what lets Hephaestium measure whether it matters.

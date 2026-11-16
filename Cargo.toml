@@ -1,0 +1,16 @@
+[package]
+name = "athenaeum"
+description = "Athenaeum's contracts, exposed so that a reader can pin them as a build dependency"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+# Never bumped. A dependent pins a tag, and the tags are derived from the
+# commits, so a number here would be a second copy of what they already say.
+version = "0.0.0"
+
+# Nothing, and it should stay that way. This crate hands out text. A reader
+# that wants to parse or validate it brings its own means.
+[dependencies]
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
