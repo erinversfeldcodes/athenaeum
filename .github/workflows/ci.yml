@@ -52,9 +52,12 @@ jobs:
 
   # check-jsonschema is the reference validator the cases are graded with.
   # Pinned, because a validator that rewords an error would fail every case.
-  manifest:
+  contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      matrix:
+        contract: [manifest, gate-result]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -62,7 +65,7 @@ jobs:
       - name: Install the reference validator
         run: pipx install check-jsonschema==0.33.0
       - name: The schema accepts and rejects what its cases say it must
-        run: bash scripts/check-manifest-cases.sh
+        run: bash scripts/check-cases.sh "${{ matrix.contract }}"
 
   # The crate hands the schema and its cases to readers written in Rust.
   # rustup reads rust-toolchain.toml, so CI and a developer's machine install
@@ -95,7 +98,7 @@ jobs:
 
   ci:
     if: always()
-    needs: [docs, commits, manifest, rust, skills]
+    needs: [docs, commits, contracts, rust, skills]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

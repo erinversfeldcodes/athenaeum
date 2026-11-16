@@ -46,7 +46,7 @@ first line:
 ```
 
 The path says where in the manifest the rule is broken, and the keyword is the
-JSON Schema keyword that rejects it. `scripts/check-manifest-cases.sh` grades
+JSON Schema keyword that rejects it. `scripts/check-cases.sh manifest` grades
 the schema against the cases, and fails a case that is accepted, that breaks
 more than one rule, or that is rejected for a different reason than it states.
 Being rejected is not enough: a case rejected for the wrong reason would keep

@@ -1,0 +1,1 @@
+{ "schema_version": 0, "gate": "regression", "outcome": "passed", "command": ["just", "ci"], "duration_ms": 10 }
