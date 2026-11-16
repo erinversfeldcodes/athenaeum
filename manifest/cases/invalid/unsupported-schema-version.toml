@@ -1,0 +1,6 @@
+# violates: $.schema_version const
+schema_version = 1
+
+[components.app]
+root = "."
+paths = ["**"]

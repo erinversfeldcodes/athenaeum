@@ -1,0 +1,6 @@
+# violates: $.components.app.paths[0] pattern
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["../elsewhere/**"]

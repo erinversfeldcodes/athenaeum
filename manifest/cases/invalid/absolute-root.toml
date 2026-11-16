@@ -1,0 +1,8 @@
+# violates: $.components.app.root pattern
+# A path is relative to the repository root, so the manifest means the same
+# thing in every checkout.
+schema_version = 0
+
+[components.app]
+root = "/srv/app"
+paths = ["**"]

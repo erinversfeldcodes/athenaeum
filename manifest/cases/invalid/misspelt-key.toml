@@ -1,0 +1,13 @@
+# violates: $.gates.regression additionalProperties
+# `when_path` for `when_paths`. Ignoring it would make the gate run for every
+# change, which is the opposite of what the author meant.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.regression]
+run = ["just", "ci"]
+when_path = ["api/**"]
+timeout_seconds = 60

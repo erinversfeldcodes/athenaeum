@@ -1,0 +1,52 @@
+# A worked example for an invented repository: a Rust service and a
+# TypeScript front end. It is checked against the schema on every change, so
+# it cannot drift from what the schema accepts.
+schema_version = 0
+
+# Every command below is run through this prefix, unless the named variable
+# is already set, which means the caller is inside the development shell.
+[toolchain]
+wrapper = ["nix", "develop", "--command"]
+inside_env = "IN_DEV_SHELL"
+
+[components.api]
+pack = "rust"
+root = "api"
+paths = ["api/**"]
+generated = ["api/src/gen/**"]
+test = ["cargo", "test"]
+lint = [
+  ["cargo", "fmt", "--check"],
+  ["cargo", "clippy", "--all-targets", "--", "-D", "warnings"],
+]
+
+[components.web]
+pack = "typescript"
+root = "web"
+paths = ["web/**"]
+test = ["npm", "test"]
+lint = [["npm", "run", "lint"]]
+
+# Runs for every change.
+[gates.regression]
+run = ["just", "ci"]
+timeout_seconds = 1800
+
+# Runs only when a change touches a migration.
+[gates.fresh-database]
+run = ["just", "fresh-database"]
+when_paths = ["api/migrations/**"]
+timeout_seconds = 900
+
+# Reports a structured result instead of only an exit code.
+[gates.preview]
+run = ["just", "preview-and-drive"]
+when_paths = ["api/**", "web/**"]
+timeout_seconds = 3600
+result = "json"
+
+[docs]
+architecture = "docs/architecture.md"
+stories = ["docs/stories"]
+decisions = "docs/adr"
+goals = ["docs/goals.md"]

@@ -1,0 +1,10 @@
+# violates: $.gates.regression required
+# A gate with no limit can hold a workload open for ever.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.regression]
+run = ["just", "ci"]

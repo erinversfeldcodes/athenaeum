@@ -1,0 +1,7 @@
+# violates: $ required
+# A manifest that does not say which schema it follows cannot be read safely
+# once a second version exists.
+
+[components.app]
+root = "."
+paths = ["**"]

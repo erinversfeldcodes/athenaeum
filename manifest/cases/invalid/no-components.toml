@@ -1,0 +1,5 @@
+# violates: $.components minProperties
+# A repository with nothing to build or test has nothing to manage.
+schema_version = 0
+
+[components]
