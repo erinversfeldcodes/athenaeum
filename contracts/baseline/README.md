@@ -22,9 +22,11 @@ could not express in a schema.
 | `workflow` | a named rule holds for every workflow under `.github/workflows` |
 | `setting` | a named repository setting on GitHub is on |
 | `ruleset` | a named rule holds for an active ruleset that targets the default branch |
+| `config` | a named rule holds for the content of a configuration file, with the data the rule needs |
 
 A `file` item may also say how to satisfy it: `apply` names the templates, from the
-[baseline pack](../../baseline/README.md), and where each is written. An item without
+[baseline pack](../../baseline/README.md), and where each is written, or names a
+generator for a file a tool composes from what it finds. An item without
 `apply` is checked and never written.
 
 A `ruleset` item is satisfied by a ruleset and not by classic branch protection. Two of

@@ -87,6 +87,7 @@ wording_of() {
     uniqueItems) echo 'has non-unique elements' ;;
     minProperties) echo 'should be non-empty|does not have enough properties' ;;
     not) echo 'should not be valid under' ;;
+    anyOf) echo 'is not valid under any of the given schemas' ;;
     *) return 1 ;;
   esac
 }

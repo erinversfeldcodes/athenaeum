@@ -42,8 +42,8 @@
           "minLength": 1
         },
         "kind": {
-          "description": "How the item is checked. `file`: one of some paths exists. `workflow`: a rule holds for the repository's workflows. `setting`: a repository setting on GitHub is on. `ruleset`: a rule holds for the default branch's ruleset.",
-          "enum": ["file", "workflow", "setting", "ruleset"]
+          "description": "How the item is checked. `file`: one of some paths exists. `workflow`: a rule holds for the repository's workflows. `setting`: a repository setting on GitHub is on. `ruleset`: a rule holds for the default branch's ruleset. `config`: a rule holds for the content of a configuration file.",
+          "enum": ["file", "workflow", "setting", "ruleset", "config"]
         },
         "severity": {
           "description": "`required`: a repository that lacks it fails the check. `recommended`: it is reported and never fails the check.",
@@ -81,7 +81,7 @@
         {
           "if": {
             "required": ["kind"],
-            "properties": { "kind": { "enum": ["workflow", "setting", "ruleset"] } }
+            "properties": { "kind": { "enum": ["workflow", "setting", "ruleset", "config"] } }
           },
           "then": { "not": { "required": ["apply"] } }
         },
@@ -100,15 +100,33 @@
         {
           "if": { "required": ["kind"], "properties": { "kind": { "const": "ruleset" } } },
           "then": { "properties": { "check": { "$ref": "#/$defs/ruleset-check" } } }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "config" } } },
+          "then": { "properties": { "check": { "$ref": "#/$defs/config-check" } } }
         }
       ]
     },
     "apply": {
-      "description": "The files that satisfy an item, each written from a template. A path may use a variable written `{{name}}`, from the list the baseline pack defines, such as `{{licence}}`.",
+      "description": "How a tool satisfies an item by writing a file: either `files`, each written from a template, or `generate`, a file a tool composes from what it finds. Not both, and one of them. A template path may use a variable written `{{name}}`, from the list the baseline pack defines, such as `{{licence}}`.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["files"],
+      "anyOf": [{ "required": ["files"] }, { "required": ["generate"] }],
+      "not": { "required": ["files", "generate"] },
       "properties": {
+        "generate": {
+          "description": "A file the tool composes. The generator is from a closed list, each defined by the tool that applies it and by the templates the pack holds for it: `dependabot` writes a `dependabot.yml` with an entry for each ecosystem and directory it finds, from `dependabot/header.yml` and `dependabot/entry.yml`.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["generator", "destination"],
+          "properties": {
+            "generator": { "enum": ["dependabot"] },
+            "destination": {
+              "description": "Where the file is written, relative to the repository root.",
+              "$ref": "#/$defs/path"
+            }
+          }
+        },
         "files": {
           "type": "array",
           "minItems": 1,
@@ -124,6 +142,38 @@
               "destination": {
                 "description": "Where the file is written, relative to the repository root.",
                 "$ref": "#/$defs/path"
+              }
+            }
+          }
+        }
+      }
+    },
+    "config-check": {
+      "description": "Satisfied when a rule holds for the content of a configuration file. The rule is from a closed list, each defined by the tool that checks it: `dependabot-covers-ecosystems`: every ecosystem the repository uses, found by the markers given here, has an entry in `dependabot.yml` for the directory it is used in.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule", "ecosystems"],
+      "properties": {
+        "rule": { "enum": ["dependabot-covers-ecosystems"] },
+        "ecosystems": {
+          "description": "The ecosystems the rule looks for, each named as Dependabot names it. At least one.",
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/slug" },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["markers", "directory"],
+            "properties": {
+              "markers": {
+                "description": "Paths or globs, relative to the repository root, of files whose presence shows the ecosystem is used. `**/` matches any depth, the root included. At least one.",
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/path" }
+              },
+              "directory": {
+                "description": "Where its updates are configured. `parent`: the directory of the marker file, `/` for the root. `root`: always `/`, as for GitHub Actions.",
+                "enum": ["parent", "root"]
               }
             }
           }

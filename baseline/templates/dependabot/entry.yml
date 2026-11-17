@@ -1,0 +1,9 @@
+  - package-ecosystem: {{ecosystem}}
+    directory: {{directory}}
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      {{ecosystem}}:
+        update-types: [minor, patch]
