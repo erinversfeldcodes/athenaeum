@@ -1,0 +1,45 @@
+# Every setting a settings check may name.
+schema_version = 0
+
+[items.security-secret-scanning]
+title = "Secret scanning is on"
+kind = "setting"
+severity = "required"
+applies = { visibility = ["public"] }
+check = { setting = "secret-scanning" }
+
+[items.security-push-protection]
+title = "Push protection is on"
+kind = "setting"
+severity = "required"
+check = { setting = "secret-scanning-push-protection" }
+
+[items.security-dependabot-alerts]
+title = "Dependabot alerts are on"
+kind = "setting"
+severity = "required"
+check = { setting = "dependabot-alerts" }
+
+[items.security-dependabot-updates]
+title = "Dependabot security updates are on"
+kind = "setting"
+severity = "required"
+check = { setting = "dependabot-security-updates" }
+
+[items.security-code-scanning]
+title = "Code scanning is set up"
+kind = "setting"
+severity = "recommended"
+check = { setting = "code-scanning" }
+
+[items.repository-delete-branch-on-merge]
+title = "Merged branches are deleted"
+kind = "setting"
+severity = "recommended"
+check = { setting = "delete-branch-on-merge" }
+
+[items.repository-description]
+title = "The repository has a description"
+kind = "setting"
+severity = "recommended"
+check = { setting = "description" }

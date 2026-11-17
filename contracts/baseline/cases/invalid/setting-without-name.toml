@@ -1,0 +1,9 @@
+# violates: $.items['security-x'].check required
+# A setting check says which setting.
+schema_version = 0
+
+[items.security-x]
+title = "A setting"
+kind = "setting"
+severity = "required"
+check = {}

@@ -1,0 +1,9 @@
+# violates: $.items['branch-x'].check additionalProperties
+# A ruleset item is checked by a rule, not by a setting.
+schema_version = 0
+
+[items.branch-x]
+title = "A rule"
+kind = "ruleset"
+severity = "required"
+check = { rule = "linear-history", setting = "dependabot-alerts" }

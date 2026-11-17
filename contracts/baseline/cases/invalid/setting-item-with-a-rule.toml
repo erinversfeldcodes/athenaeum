@@ -1,0 +1,9 @@
+# violates: $.items['security-x'].check additionalProperties
+# A setting item is checked by a setting, not by a rule.
+schema_version = 0
+
+[items.security-x]
+title = "A setting"
+kind = "setting"
+severity = "required"
+check = { setting = "dependabot-alerts", rule = "actions-pinned" }

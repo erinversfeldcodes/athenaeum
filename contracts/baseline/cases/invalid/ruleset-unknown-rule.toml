@@ -1,0 +1,9 @@
+# violates: $.items['branch-x'].check.rule enum
+# The rules are a closed list: a reader must implement each.
+schema_version = 0
+
+[items.branch-x]
+title = "A rule"
+kind = "ruleset"
+severity = "required"
+check = { rule = "signed-commits" }
