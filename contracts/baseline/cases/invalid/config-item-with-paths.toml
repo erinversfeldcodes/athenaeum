@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check additionalProperties
+# A config item is checked by a rule, not by paths.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "parent" } }, path_any = ["x"] }

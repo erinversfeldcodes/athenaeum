@@ -1,0 +1,9 @@
+# An item may say that a tool generates its file, instead of copying a template.
+schema_version = 0
+
+[items.dependencies-dependabot-config]
+title = "Dependabot version updates are configured"
+kind = "file"
+severity = "required"
+check = { path_any = [".github/dependabot.yml"] }
+apply = { generate = { generator = "dependabot", destination = ".github/dependabot.yml" } }

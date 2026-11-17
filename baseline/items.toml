@@ -81,6 +81,7 @@ kind = "file"
 severity = "required"
 source = "https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates"
 check = { path_any = [".github/dependabot.yml", ".github/dependabot.yaml"] }
+apply = { generate = { generator = "dependabot", destination = ".github/dependabot.yml" } }
 
 [items.ci-actions-pinned]
 title = "Every action is used at a version or a commit, never at a branch"
@@ -202,3 +203,21 @@ kind = "ruleset"
 severity = "required"
 source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
 check = { rule = "bypass-matches-answers" }
+
+[items.dependencies-dependabot-coverage]
+title = "Dependabot watches every ecosystem the repository uses"
+kind = "config"
+severity = "required"
+source = "https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates"
+
+[items.dependencies-dependabot-coverage.check]
+rule = "dependabot-covers-ecosystems"
+
+[items.dependencies-dependabot-coverage.check.ecosystems]
+cargo = { markers = ["**/Cargo.toml"], directory = "parent" }
+npm = { markers = ["**/package.json"], directory = "parent" }
+github-actions = { markers = [".github/workflows/*.yml", ".github/workflows/*.yaml"], directory = "root" }
+docker = { markers = ["**/Dockerfile"], directory = "parent" }
+pip = { markers = ["**/requirements.txt", "**/pyproject.toml"], directory = "parent" }
+gomod = { markers = ["**/go.mod"], directory = "parent" }
+mix = { markers = ["**/mix.exs"], directory = "parent" }

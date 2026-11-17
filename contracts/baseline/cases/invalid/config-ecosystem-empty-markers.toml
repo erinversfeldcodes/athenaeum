@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems.cargo.markers minItems
+# No markers means the ecosystem is never found.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = [], directory = "parent" } } }

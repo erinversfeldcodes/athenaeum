@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check required
+# A config check names the rule.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "parent" } } }

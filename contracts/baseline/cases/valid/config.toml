@@ -1,0 +1,15 @@
+# A rule about the content of a configuration file, with the data it needs.
+schema_version = 0
+
+[items.dependencies-dependabot-coverage]
+title = "Dependabot watches every ecosystem the repository uses"
+kind = "config"
+severity = "required"
+
+[items.dependencies-dependabot-coverage.check]
+rule = "dependabot-covers-ecosystems"
+
+[items.dependencies-dependabot-coverage.check.ecosystems]
+cargo = { markers = ["**/Cargo.toml"], directory = "parent" }
+npm = { markers = ["**/package.json"], directory = "parent" }
+github-actions = { markers = [".github/workflows/*.yml", ".github/workflows/*.yaml"], directory = "root" }

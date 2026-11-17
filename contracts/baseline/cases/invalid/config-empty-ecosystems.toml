@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems minProperties
+# A rule over no ecosystems checks nothing.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = {} }

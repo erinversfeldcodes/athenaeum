@@ -14,6 +14,12 @@ will rot, and one a reader cannot tell is dead.
 
 Every variable a template uses is in the closed list below. A template that
 uses a name the tool does not know would be written out with `{{name}}` in it.
+Two variables, `ecosystem` and `directory`, are filled in once for each entry a
+generator writes, so only the generator's entry template may use them.
+
+A generator names its templates here, because the pack defines them and the
+tool that applies the generator reads them: `dependabot` uses
+`dependabot/header.yml` and `dependabot/entry.yml`.
 
 The list of variables is defined here and in the tool that fills them in, and
 the pack's README, so a change to it is a change to the contract.
@@ -24,6 +30,9 @@ import tomllib
 from pathlib import Path
 
 VARIABLES = {"owner", "repository", "holder", "year", "contact", "licence"}
+GENERATORS = {"dependabot": {"dependabot/header.yml", "dependabot/entry.yml"}}
+ENTRY_VARIABLES = {"ecosystem", "directory"}
+ENTRY_TEMPLATES = {"dependabot/entry.yml"}
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "baseline" / "templates"
 ITEMS = ROOT / "baseline" / "items.toml"
@@ -37,6 +46,16 @@ def main() -> int:
 
     named: set[Path] = set()
     for item_id, item in items.items():
+        generate = item.get("apply", {}).get("generate")
+        if generate:
+            wanted = GENERATORS.get(generate["generator"])
+            if wanted is None:
+                problems.append(f"{item_id}: this check does not know the generator {generate['generator']}")
+            for name in sorted(wanted or ()):
+                path = TEMPLATES / name
+                named.add(path)
+                if not path.is_file():
+                    problems.append(f"{item_id}: the generator {generate['generator']} needs the template {name}, which does not exist")
         for entry in item.get("apply", {}).get("files", []):
             template = entry["template"]
             names = set(VARIABLE.findall(template))
@@ -58,8 +77,9 @@ def main() -> int:
         if path not in named:
             problems.append(f"{relative}: no item names it")
         text = path.read_text()
+        allowed = VARIABLES | (ENTRY_VARIABLES if str(relative) in ENTRY_TEMPLATES else set())
         for name in VARIABLE.findall(text):
-            if name not in VARIABLES:
+            if name not in allowed:
                 problems.append(f"{relative}: uses the variable {{{{{name}}}}}, which is not one of {sorted(VARIABLES)}")
         stray = VARIABLE.sub("", text)
         if "{{" in stray or "}}" in stray:

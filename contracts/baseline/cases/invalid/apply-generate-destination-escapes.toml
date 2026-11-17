@@ -1,0 +1,10 @@
+# violates: $.items['deps-y'].apply.generate.destination pattern
+# A file is written inside the repository and nowhere else.
+schema_version = 0
+
+[items.deps-y]
+title = "Dependabot is configured"
+kind = "file"
+severity = "required"
+check = { path_any = [".github/dependabot.yml"] }
+apply = { generate = { generator = "dependabot", destination = "../dependabot.yml" } }

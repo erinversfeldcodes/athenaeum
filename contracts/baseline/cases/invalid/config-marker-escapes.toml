@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems.cargo.markers[0] pattern
+# A marker is searched for inside the repository and nowhere else.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = ["../Cargo.toml"], directory = "parent" } } }
