@@ -21,6 +21,7 @@ Version 0 holds only what something reads today.
 | `toolchain` | How to enter the repository's pinned toolchain before running anything. |
 | `components` | What the buildable parts are, which files belong to each, and how each is tested and linted. |
 | `gates` | Which commands decide whether a change may proceed, which changes each applies to, and which environment variables and secrets each needs. |
+| `bootstrap` | The steps that prepare a fresh workspace so the gates can run in it. |
 | `docs` | Where the documents a skill may need are kept. |
 
 Review policy, workspace bootstrap and the drive are not in version 0. Each is
