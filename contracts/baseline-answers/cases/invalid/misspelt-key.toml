@@ -1,0 +1,8 @@
+# violates: $ additionalProperties
+# A misspelt key would be ignored, and the answer it was meant to give would be missing.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"
+requird_checks = ["test"]

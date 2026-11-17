@@ -1,0 +1,7 @@
+# violates: $.default_branch_bypass enum
+# The administrator bypasses by merging a pull request, or not at all; nothing else is defined.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "push"

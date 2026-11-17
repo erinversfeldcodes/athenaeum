@@ -1,0 +1,12 @@
+schema_version = 0
+
+licence = "source-available"
+contact = "security@example.org"
+required_checks = ["fmt + clippy", "test", "E2E (local)"]
+default_branch_bypass = "admin-pull-request"
+
+[exceptions.community-code-owners]
+reason = "One maintainer; every file would have the same owner."
+
+[exceptions.ci-job-timeouts]
+reason = "The deploy workflow waits on an external system."

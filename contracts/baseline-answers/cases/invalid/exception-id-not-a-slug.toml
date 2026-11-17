@@ -1,0 +1,10 @@
+# violates: $.exceptions propertyNames
+# An exception names an item by its id, which is a slug.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"
+
+[exceptions.CI_Job_Timeouts]
+reason = "A reason."

@@ -1,0 +1,11 @@
+# violates: $.exceptions['ci-job-timeouts'] additionalProperties
+# An exception gives a reason and nothing else; another key would be ignored.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"
+
+[exceptions.ci-job-timeouts]
+reason = "A reason."
+until = "2027-01-01"

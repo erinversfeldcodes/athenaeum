@@ -1,0 +1,7 @@
+# violates: $.schema_version const
+# A reader that does not know the version must refuse it.
+schema_version = 1
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"

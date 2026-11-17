@@ -1,0 +1,6 @@
+# violates: $ required
+# A reader must know which version it is reading.
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"

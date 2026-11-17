@@ -1,0 +1,6 @@
+# violates: $ required
+# The default branch requires some check; the repository says which.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+default_branch_bypass = "none"

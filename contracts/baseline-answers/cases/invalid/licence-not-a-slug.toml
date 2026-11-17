@@ -1,0 +1,7 @@
+# violates: $.licence pattern
+# A licence is named by a lower-case slug, which names its template.
+schema_version = 0
+licence = "Source Available"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"

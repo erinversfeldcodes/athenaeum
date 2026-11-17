@@ -1,0 +1,6 @@
+# violates: $ required
+# Whether the administrator may bypass is a decision, so it is stated.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci"]

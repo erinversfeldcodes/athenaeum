@@ -1,0 +1,6 @@
+# violates: $ required
+# A security policy says where to report a vulnerability, so the repository must say where.
+schema_version = 0
+licence = "mit"
+required_checks = ["ci"]
+default_branch_bypass = "none"
