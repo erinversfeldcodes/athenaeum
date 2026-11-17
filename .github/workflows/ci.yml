@@ -24,6 +24,19 @@ jobs:
       - name: Every relative link in the documentation resolves
         run: bash scripts/check-doc-links.sh
 
+  # The baseline's templates and the items that name them must agree: every
+  # template an item names exists, every template is used, and every variable a
+  # template uses is one the tool fills in.
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Every template exists, is used and uses only known variables
+        run: python3 scripts/check-baseline-templates.py
+
   # Releases are versioned from commit messages, so every commit a pull
   # request could land on main must be a conventional commit: each commit for
   # a rebase merge, and the pull request title for a squash merge.
@@ -98,7 +111,7 @@ jobs:
 
   ci:
     if: always()
-    needs: [docs, commits, contracts, rust, skills]
+    needs: [docs, commits, contracts, pack, rust, skills]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

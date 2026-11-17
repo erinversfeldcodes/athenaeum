@@ -7,6 +7,9 @@
 #
 # Checked: inline links of the form [text](target) whose target is a path in
 # this repository. Not checked: absolute URLs, mail links, and bare anchors.
+# Also not checked: the baseline's templates. Their relative links name files
+# in the repository they are written into, such as its LICENSE, and not files
+# here.
 set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
@@ -34,7 +37,7 @@ while IFS= read -r file; do
       status=1
     fi
   done < <(grep -oE '\]\([^) ]+\)' "$file" | sed -E 's/^\]\(//; s/\)$//' || true)
-done < <(git ls-files --cached --others --exclude-standard -- '*.md')
+done < <(git ls-files --cached --others --exclude-standard -- '*.md' ':!baseline/templates')
 
 if [ "$status" -ne 0 ]; then
   exit 1

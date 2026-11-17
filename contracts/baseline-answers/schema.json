@@ -16,6 +16,11 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
     },
+    "holder": {
+      "description": "Who holds the copyright, as the licence's copyright line names them. Optional, and needed only by a template that uses it: applying a template that needs a holder when there is none is an error.",
+      "type": "string",
+      "minLength": 1
+    },
     "contact": {
       "description": "Where a vulnerability is reported: an address or a link.",
       "type": "string",

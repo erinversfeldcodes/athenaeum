@@ -112,6 +112,51 @@ fn main() {
         std::fs::write(out.join(contract.output), cases)
             .expect("to write the generated list of cases");
     }
+
+    templates(&root, &out);
+}
+
+/// Hand out every file under `baseline/templates` with its path relative to
+/// that directory, so a tool pins the templates with the contract and has no
+/// second place to find them.
+fn templates(root: &Path, out: &Path) {
+    let directory = root.join("baseline/templates");
+    println!("cargo:rerun-if-changed={}", directory.display());
+
+    let mut files = Vec::new();
+    collect(&directory, &mut files);
+    files.sort();
+
+    let mut list = String::from("&[\n");
+    for file in files {
+        let relative = file
+            .strip_prefix(&directory)
+            .expect("a template to be under its directory")
+            .to_string_lossy()
+            .replace('\\', "/");
+        let absolute = literal(&file);
+        let _ = writeln!(
+            list,
+            "    Template {{ path: {relative:?}, text: include_str!({absolute:?}) }},"
+        );
+    }
+    list.push_str("]\n");
+    std::fs::write(out.join("baseline_templates.rs"), list)
+        .expect("to write the generated list of templates");
+}
+
+/// Every file under a directory, however deep.
+fn collect(directory: &Path, files: &mut Vec<PathBuf>) {
+    for entry in std::fs::read_dir(directory)
+        .unwrap_or_else(|error| panic!("{} should be readable: {error}", directory.display()))
+    {
+        let path = entry.expect("a directory entry").path();
+        if path.is_dir() {
+            collect(&path, files);
+        } else {
+            files.push(path);
+        }
+    }
 }
 
 /// The files with an extension in a directory, in name order, so the

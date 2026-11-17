@@ -6,7 +6,7 @@ use std::collections::BTreeSet;
 use std::path::Path;
 
 use athenaeum::Expectation;
-use athenaeum::baseline::{CASES, EXAMPLE, ITEMS, SCHEMA};
+use athenaeum::baseline::{CASES, EXAMPLE, ITEMS, SCHEMA, TEMPLATES};
 
 const ROOT: &str = env!("CARGO_MANIFEST_DIR");
 
@@ -104,4 +104,37 @@ fn the_items_are_the_file_in_the_repository() {
         ITEMS,
         std::fs::read_to_string(Path::new(ROOT).join("baseline/items.toml")).expect("the items")
     );
+}
+
+#[test]
+fn the_templates_are_exactly_the_files_in_the_pack() {
+    fn on_disk(directory: &Path, root: &Path, found: &mut BTreeSet<String>) {
+        for entry in std::fs::read_dir(directory).expect("a readable directory") {
+            let path = entry.expect("a directory entry").path();
+            if path.is_dir() {
+                on_disk(&path, root, found);
+            } else {
+                found.insert(
+                    path.strip_prefix(root)
+                        .expect("a path under the root")
+                        .to_string_lossy()
+                        .into_owned(),
+                );
+            }
+        }
+    }
+    let root = Path::new(ROOT).join("baseline/templates");
+    let mut files = BTreeSet::new();
+    on_disk(&root, &root, &mut files);
+
+    let exposed: BTreeSet<String> = TEMPLATES.iter().map(|t| t.path.to_owned()).collect();
+    assert_eq!(exposed, files);
+    for template in TEMPLATES {
+        assert_eq!(
+            template.text,
+            std::fs::read_to_string(root.join(template.path)).expect("the template"),
+            "{}",
+            template.path
+        );
+    }
 }
