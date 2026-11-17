@@ -109,9 +109,34 @@ jobs:
       - name: Every skill is named for its directory and cites only what exists
         run: python3 scripts/check-skills.py
 
+  # The repository must pass the baseline it defines. heph is the released
+  # binary, pinned by version and by the SHA-256 GitHub reports for the asset, so
+  # a replaced release fails here instead of running. It runs without --settings:
+  # the workflow token cannot read the security settings or the rulesets, so a
+  # person with admin access checks those.
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      HEPH_VERSION: v0.11.1
+      HEPH_SHA256: b4f95464505c6a138e21c1ba8c3132345ac7d6b5178c200218676a82c1760a8c
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install heph
+        run: |
+          archive="heph-${HEPH_VERSION}-linux-x86_64.tar.gz"
+          curl -fsSL -o "$archive" "https://github.com/erinversfeldcodes/hephaestium/releases/download/${HEPH_VERSION}/${archive}"
+          echo "${HEPH_SHA256}  ${archive}" | sha256sum --check --strict
+          tar -xzf "$archive"
+          install -m 0755 "heph-${HEPH_VERSION}-linux-x86_64/heph" /usr/local/bin/heph
+      - name: The files and workflows satisfy the baseline
+        run: heph baseline check
+
   ci:
     if: always()
-    needs: [docs, commits, contracts, pack, rust, skills]
+    needs: [docs, commits, contracts, pack, rust, skills, baseline]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
