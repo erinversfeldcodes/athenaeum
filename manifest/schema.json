@@ -120,6 +120,13 @@
         "result": {
           "description": "How the gate reports. `exit-code`, the default: zero is a pass. `json`: the command also writes a structured result that the caller reads.",
           "enum": ["exit-code", "json"]
+        },
+        "requires": {
+          "description": "Environment variables the gate needs, keyed by name. `env`: must be set and non-empty. `secret`: the same, and the value must come from a secret store and never be printed or logged. A gate that declares requirements is not run when one is missing. Absent means the gate needs nothing.",
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "pattern": "^[A-Z][A-Z0-9_]*$" },
+          "additionalProperties": { "enum": ["env", "secret"] }
         }
       }
     },

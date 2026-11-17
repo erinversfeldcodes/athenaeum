@@ -38,6 +38,12 @@ run = ["just", "fresh-database"]
 when_paths = ["api/migrations/**"]
 timeout_seconds = 900
 
+# Not run, and reported as such, unless these are set. A secret is never
+# printed or logged.
+[gates.fresh-database.requires]
+DATABASE_URL = "env"
+ADMIN_TOKEN = "secret"
+
 # Reports a structured result instead of only an exit code.
 [gates.preview]
 run = ["just", "preview-and-drive"]

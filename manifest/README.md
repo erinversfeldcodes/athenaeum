@@ -20,19 +20,24 @@ Version 0 holds only what something reads today.
 | `schema_version` | Which version of the schema this manifest follows. |
 | `toolchain` | How to enter the repository's pinned toolchain before running anything. |
 | `components` | What the buildable parts are, which files belong to each, and how each is tested and linted. |
-| `gates` | Which commands decide whether a change may proceed, and which changes each applies to. |
+| `gates` | Which commands decide whether a change may proceed, which changes each applies to, and which environment variables and secrets each needs. |
 | `docs` | Where the documents a skill may need are kept. |
 
 Review policy, workspace bootstrap and the drive are not in version 0. Each is
 added when something reads it.
 
-## Three rules that shape it
+## Four rules that shape it
 
 - **An unknown key is an error.** A misspelt `when_paths` that was silently
   ignored would make a gate run for every change, the opposite of what its
   author meant.
 - **A command is a list of arguments.** A single string would need a shell to
   split it, and then quoting decides what runs.
+- **A gate says what it needs.** `requires` names the environment variables a
+  gate depends on, as `env` or as `secret`. A reader that finds one missing does
+  not run the gate, so a missing prerequisite is never mistaken for a failing
+  test. A `secret` is never printed or logged. Naming each variable once, as a
+  key, makes a duplicate or a variable that is both kinds impossible to write.
 - **A path is relative and stays inside the repository.** The manifest then
   means the same thing in every checkout.
 
