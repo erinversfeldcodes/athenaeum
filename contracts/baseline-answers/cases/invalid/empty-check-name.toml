@@ -1,0 +1,7 @@
+# violates: $.required_checks[0] minLength
+# A check is named by what GitHub reports it as.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = [""]
+default_branch_bypass = "none"

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/erinversfeldcodes/athenaeum/blob/main/contracts/baseline-answers/schema.json",
+  "title": "Baseline answers, version 0",
+  "description": "A repository's own answers to the baseline: what the baseline cannot decide for it, and any exception it takes, each with a reason. Written as TOML, at `.athenaeum/baseline.toml`. Every key is listed here: an unknown key is an error, so a misspelt one fails instead of being ignored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "licence", "contact", "required_checks", "default_branch_bypass"],
+  "properties": {
+    "schema_version": {
+      "description": "The version of this schema the answers follow. A reader that does not know the version must refuse them.",
+      "const": 0
+    },
+    "licence": {
+      "description": "The licence the repository uses, as a lower-case slug that names a licence template.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "contact": {
+      "description": "Where a vulnerability is reported: an address or a link.",
+      "type": "string",
+      "minLength": 1
+    },
+    "required_checks": {
+      "description": "The checks the default branch requires, each named as GitHub reports it. At least one, with no name repeated.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "default_branch_bypass": {
+      "description": "Who may bypass the default branch's rules. `admin-pull-request`: the repository administrator, and only by merging a pull request, never by pushing. `none`: nobody.",
+      "enum": ["admin-pull-request", "none"]
+    },
+    "exceptions": {
+      "description": "Baseline items the repository does not satisfy, keyed by item id, each with the reason. Keying by id makes a repeated id impossible to write. That an id names a real item is checked by the tool that reads both this file and the baseline.",
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reason"],
+        "properties": {
+          "reason": {
+            "description": "Why the repository does not satisfy the item. Shown in every report that excepts it.",
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+# violates: $.contact minLength
+# An empty contact reports nowhere.
+schema_version = 0
+licence = "mit"
+contact = ""
+required_checks = ["ci"]
+default_branch_bypass = "none"

@@ -1,0 +1,6 @@
+schema_version = 0
+
+licence = "mit"
+contact = "https://example.org/security"
+required_checks = ["ci"]
+default_branch_bypass = "none"

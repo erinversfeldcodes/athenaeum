@@ -1,0 +1,12 @@
+# A worked example of a repository's answers to the baseline. It is checked
+# against the schema on every change, so it cannot drift from what the schema
+# accepts. A repository keeps its own at .athenaeum/baseline.toml.
+schema_version = 0
+
+licence = "source-available"
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "admin-pull-request"
+
+[exceptions.ci-job-timeouts]
+reason = "The deploy workflow waits on an external system; a timeout would hide a stuck deploy."

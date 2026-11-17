@@ -1,0 +1,7 @@
+# violates: $.required_checks uniqueItems
+# Saying a check twice is a mistake worth catching.
+schema_version = 0
+licence = "mit"
+contact = "security@example.org"
+required_checks = ["ci", "ci"]
+default_branch_bypass = "none"
