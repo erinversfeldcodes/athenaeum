@@ -71,9 +71,20 @@
         "check": {
           "description": "What a tool does to decide whether the repository has it. Its keys depend on `kind`.",
           "type": "object"
+        },
+        "apply": {
+          "description": "How a tool could satisfy the item by writing files, from the templates in `baseline/templates`. Only a `file` item has one. An item without it is checked and never written.",
+          "$ref": "#/$defs/apply"
         }
       },
       "allOf": [
+        {
+          "if": {
+            "required": ["kind"],
+            "properties": { "kind": { "enum": ["workflow", "setting", "ruleset"] } }
+          },
+          "then": { "not": { "required": ["apply"] } }
+        },
         {
           "if": { "required": ["kind"], "properties": { "kind": { "const": "file" } } },
           "then": { "properties": { "check": { "$ref": "#/$defs/file-check" } } }
@@ -91,6 +102,33 @@
           "then": { "properties": { "check": { "$ref": "#/$defs/ruleset-check" } } }
         }
       ]
+    },
+    "apply": {
+      "description": "The files that satisfy an item, each written from a template. A path may use a variable written `{{name}}`, from the list the baseline pack defines, such as `{{licence}}`.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["files"],
+      "properties": {
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["template", "destination"],
+            "properties": {
+              "template": {
+                "description": "The template, relative to `baseline/templates`.",
+                "$ref": "#/$defs/path"
+              },
+              "destination": {
+                "description": "Where the file is written, relative to the repository root.",
+                "$ref": "#/$defs/path"
+              }
+            }
+          }
+        }
+      }
     },
     "file-check": {
       "description": "Satisfied when at least one of the paths exists.",

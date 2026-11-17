@@ -1,0 +1,8 @@
+# violates: $.holder minLength
+# A holder that is empty puts no one in the copyright line.
+schema_version = 0
+licence = "mit"
+holder = ""
+contact = "security@example.org"
+required_checks = ["ci"]
+default_branch_bypass = "none"

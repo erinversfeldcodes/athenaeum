@@ -13,6 +13,7 @@ kind = "file"
 severity = "required"
 source = "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
 check = { path_any = ["README.md", "README", "README.rst", "README.txt"] }
+apply = { files = [{ template = "README.md", destination = "README.md" }] }
 
 [items.community-licence]
 title = "A licence, or a statement of the terms"
@@ -20,6 +21,7 @@ kind = "file"
 severity = "required"
 source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository"
 check = { path_any = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "LICENCE.md", "COPYING"] }
+apply = { files = [{ template = "licence/{{licence}}/LICENSE", destination = "LICENSE" }] }
 
 [items.community-security-policy]
 title = "A security policy that says where to report a vulnerability"
@@ -27,6 +29,7 @@ kind = "file"
 severity = "required"
 source = "https://docs.github.com/en/code-security/getting-started/adding-a-security-policy-to-your-repository"
 check = { path_any = ["SECURITY.md", ".github/SECURITY.md", "docs/SECURITY.md"] }
+apply = { files = [{ template = "SECURITY.md", destination = "SECURITY.md" }] }
 
 [items.community-contributing]
 title = "A contributing guide"
@@ -34,6 +37,7 @@ kind = "file"
 severity = "required"
 source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors"
 check = { path_any = ["CONTRIBUTING.md", ".github/CONTRIBUTING.md", "docs/CONTRIBUTING.md"] }
+apply = { files = [{ template = "licence/{{licence}}/CONTRIBUTING.md", destination = "CONTRIBUTING.md" }] }
 
 [items.community-code-of-conduct]
 title = "A code of conduct"
@@ -41,6 +45,7 @@ kind = "file"
 severity = "recommended"
 source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-code-of-conduct-to-your-project"
 check = { path_any = ["CODE_OF_CONDUCT.md", ".github/CODE_OF_CONDUCT.md", "docs/CODE_OF_CONDUCT.md"] }
+apply = { files = [{ template = "CODE_OF_CONDUCT.md", destination = "CODE_OF_CONDUCT.md" }] }
 
 [items.community-issue-templates]
 title = "Issue templates"
@@ -48,6 +53,11 @@ kind = "file"
 severity = "recommended"
 source = "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
 check = { path_any = [".github/ISSUE_TEMPLATE/*", ".github/ISSUE_TEMPLATE.md"] }
+apply = { files = [
+  { template = "licence/{{licence}}/issue/bug.yml", destination = ".github/ISSUE_TEMPLATE/bug.yml" },
+  { template = "licence/{{licence}}/issue/idea.yml", destination = ".github/ISSUE_TEMPLATE/idea.yml" },
+  { template = "issue/config.yml", destination = ".github/ISSUE_TEMPLATE/config.yml" },
+] }
 
 [items.community-pull-request-template]
 title = "A pull request template"
@@ -55,6 +65,7 @@ kind = "file"
 severity = "recommended"
 source = "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
 check = { path_any = [".github/pull_request_template.md", ".github/PULL_REQUEST_TEMPLATE.md", ".github/PULL_REQUEST_TEMPLATE/*", "pull_request_template.md"] }
+apply = { files = [{ template = "pull_request_template.md", destination = ".github/pull_request_template.md" }] }
 
 [items.community-code-owners]
 title = "Code owners"
@@ -62,6 +73,7 @@ kind = "file"
 severity = "recommended"
 source = "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
 check = { path_any = [".github/CODEOWNERS", "CODEOWNERS", "docs/CODEOWNERS"] }
+apply = { files = [{ template = "CODEOWNERS", destination = ".github/CODEOWNERS" }] }
 
 [items.dependencies-dependabot-config]
 title = "Dependabot version updates are configured"

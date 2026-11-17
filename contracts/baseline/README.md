@@ -23,6 +23,10 @@ could not express in a schema.
 | `setting` | a named repository setting on GitHub is on |
 | `ruleset` | a named rule holds for an active ruleset that targets the default branch |
 
+A `file` item may also say how to satisfy it: `apply` names the templates, from the
+[baseline pack](../../baseline/README.md), and where each is written. An item without
+`apply` is checked and never written.
+
 A `ruleset` item is satisfied by a ruleset and not by classic branch protection. Two of
 its rules compare the ruleset with the repository's own
 [answers](../baseline-answers/README.md): which checks it requires, and who may bypass.

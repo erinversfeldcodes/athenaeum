@@ -87,6 +87,20 @@ pub mod baseline {
     /// The items themselves, as TOML text that follows [`SCHEMA`].
     pub const ITEMS: &str = include_str!("../baseline/items.toml");
 
+    /// One template of the baseline pack.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub struct Template {
+        /// Where the template is, relative to `baseline/templates`, with
+        /// forward slashes. An item's `apply` names it by this path.
+        pub path: &'static str,
+        /// The template's text, with its `{{variables}}` in place.
+        pub text: &'static str,
+    }
+
+    /// Every template in the pack, in path order. Generated from the
+    /// directory by `build.rs`, so a template cannot exist without being here.
+    pub const TEMPLATES: &[Template] = include!(concat!(env!("OUT_DIR"), "/baseline_templates.rs"));
+
     /// Every case: the worked example, each file under
     /// `contracts/baseline/cases/valid` and each under `.../invalid`.
     /// Generated from those directories by `build.rs`.
