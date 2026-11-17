@@ -213,11 +213,15 @@ source = "https://docs.github.com/en/code-security/dependabot/dependabot-version
 [items.dependencies-dependabot-coverage.check]
 rule = "dependabot-covers-ecosystems"
 
+# A workspace is one lockfile at its root, so cargo, npm and mix are found by the
+# lockfile where there is one, and by the manifest at the root. A member crate or
+# package is not an ecosystem of its own. Docker, pip and Go modules name files that
+# exist once per project.
 [items.dependencies-dependabot-coverage.check.ecosystems]
-cargo = { markers = ["**/Cargo.toml"], directory = "parent" }
-npm = { markers = ["**/package.json"], directory = "parent" }
+cargo = { markers = ["Cargo.toml", "**/Cargo.lock"], directory = "parent" }
+npm = { markers = ["package.json", "**/package-lock.json", "**/yarn.lock", "**/pnpm-lock.yaml"], directory = "parent" }
 github-actions = { markers = [".github/workflows/*.yml", ".github/workflows/*.yaml"], directory = "root" }
 docker = { markers = ["**/Dockerfile"], directory = "parent" }
 pip = { markers = ["**/requirements.txt", "**/pyproject.toml"], directory = "parent" }
 gomod = { markers = ["**/go.mod"], directory = "parent" }
-mix = { markers = ["**/mix.exs"], directory = "parent" }
+mix = { markers = ["mix.exs", "**/mix.lock"], directory = "parent" }
