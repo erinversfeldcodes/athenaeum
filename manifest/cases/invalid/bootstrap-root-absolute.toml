@@ -1,0 +1,12 @@
+# violates: $.bootstrap[0].root pattern
+# A path is relative to the repository root, so the manifest means the same in every checkout.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]
+root = "/srv/editor"
+timeout_seconds = 60

@@ -25,6 +25,12 @@
       "propertyNames": { "$ref": "#/$defs/name" },
       "additionalProperties": { "$ref": "#/$defs/gate" }
     },
+    "bootstrap": {
+      "description": "The steps that prepare a fresh workspace so that the gates can run in it, run in order. Absent means there is nothing to prepare.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/bootstrap-step" }
+    },
     "docs": { "$ref": "#/$defs/docs" }
   },
   "$defs": {
@@ -127,6 +133,24 @@
           "minProperties": 1,
           "propertyNames": { "pattern": "^[A-Z][A-Z0-9_]*$" },
           "additionalProperties": { "enum": ["env", "secret"] }
+        }
+      }
+    },
+    "bootstrap-step": {
+      "description": "One step of preparing a workspace, such as installing dependencies or generating code.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run", "timeout_seconds"],
+      "properties": {
+        "run": { "$ref": "#/$defs/command" },
+        "root": {
+          "description": "The directory the step runs from, relative to the repository root. Absent means the repository root.",
+          "$ref": "#/$defs/path"
+        },
+        "timeout_seconds": {
+          "description": "How long the step may run before it is stopped and counted as failed. Required, because a step with no limit can hold a workload open for ever.",
+          "type": "integer",
+          "minimum": 1
         }
       }
     },

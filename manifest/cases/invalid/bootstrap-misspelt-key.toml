@@ -1,0 +1,12 @@
+# violates: $.bootstrap[0] additionalProperties
+# A misspelt key would be ignored, and the step would run from the wrong place.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]
+dir = "editor"
+timeout_seconds = 60

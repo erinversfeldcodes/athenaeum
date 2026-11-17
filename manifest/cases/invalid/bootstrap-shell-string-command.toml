@@ -1,0 +1,11 @@
+# violates: $.bootstrap[0].run type
+# A command is a list: a string needs a shell, and then quoting decides what runs.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = "npm ci"
+timeout_seconds = 60

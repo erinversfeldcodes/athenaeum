@@ -27,6 +27,12 @@ paths = ["web/**"]
 test = ["npm", "test"]
 lint = [["npm", "run", "lint"]]
 
+# Prepare a fresh checkout so the gates can run in it, in order.
+[[bootstrap]]
+run = ["npm", "ci"]
+root = "web"
+timeout_seconds = 900
+
 # Runs for every change.
 [gates.regression]
 run = ["just", "ci"]

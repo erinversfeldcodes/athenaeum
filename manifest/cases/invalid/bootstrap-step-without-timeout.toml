@@ -1,0 +1,10 @@
+# violates: $.bootstrap[0] required
+# A step with no limit can hold a workload open for ever.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]

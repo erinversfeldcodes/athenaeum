@@ -1,0 +1,12 @@
+# violates: $.bootstrap[0].root pattern
+# A step runs inside the repository.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]
+root = "../editor"
+timeout_seconds = 60

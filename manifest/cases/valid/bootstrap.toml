@@ -1,0 +1,16 @@
+# Steps that prepare a fresh workspace, run in order, each from a directory of
+# the repository.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]
+root = "editor"
+timeout_seconds = 900
+
+[[bootstrap]]
+run = ["just", "db-migrate"]
+timeout_seconds = 300
