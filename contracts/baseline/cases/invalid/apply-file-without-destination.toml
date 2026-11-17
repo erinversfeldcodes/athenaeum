@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'].apply.files[0] required
+# A file entry names where it is written.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }
+apply = { files = [{ template = "README.md" }] }

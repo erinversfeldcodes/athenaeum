@@ -1,0 +1,10 @@
+# violates: $.items['ci-pinned'] not
+# Only a file item is satisfied by writing a file.
+schema_version = 0
+
+[items.ci-pinned]
+title = "Every action is pinned"
+kind = "workflow"
+severity = "required"
+check = { rule = "actions-pinned" }
+apply = { files = [{ template = "README.md", destination = "README.md" }] }

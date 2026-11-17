@@ -1,0 +1,26 @@
+# An item may say which template satisfies it. A path may use a variable.
+schema_version = 0
+
+[items.community-security-policy]
+title = "A security policy"
+kind = "file"
+severity = "required"
+check = { path_any = ["SECURITY.md"] }
+apply = { files = [{ template = "SECURITY.md", destination = "SECURITY.md" }] }
+
+[items.community-issue-templates]
+title = "Issue templates"
+kind = "file"
+severity = "recommended"
+check = { path_any = [".github/ISSUE_TEMPLATE/*"] }
+apply = { files = [
+  { template = "issue/bug.yml", destination = ".github/ISSUE_TEMPLATE/bug.yml" },
+  { template = "issue/config.yml", destination = ".github/ISSUE_TEMPLATE/config.yml" },
+] }
+
+[items.community-licence]
+title = "A licence"
+kind = "file"
+severity = "required"
+check = { path_any = ["LICENSE"] }
+apply = { files = [{ template = "licence/{{licence}}/LICENSE", destination = "LICENSE" }] }

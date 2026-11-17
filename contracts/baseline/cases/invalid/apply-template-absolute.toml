@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'].apply.files[0].template pattern
+# A template is found relative to the pack, so it means the same everywhere.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }
+apply = { files = [{ template = "/README.md", destination = "README.md" }] }
