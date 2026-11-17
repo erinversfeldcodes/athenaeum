@@ -1,0 +1,14 @@
+# violates: $.gates.test.requires propertyNames
+# A name cannot start with a digit.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 60
+
+[gates.test.requires]
+1_URL = "env"

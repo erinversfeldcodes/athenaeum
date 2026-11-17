@@ -1,0 +1,14 @@
+# violates: $.gates.test.requires minProperties
+# If a gate declares requirements it names at least one; an empty table says nothing and is left out.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 60
+
+[gates.test.requires]
+

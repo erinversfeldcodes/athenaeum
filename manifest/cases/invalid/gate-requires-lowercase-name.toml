@@ -1,0 +1,14 @@
+# violates: $.gates.test.requires propertyNames
+# A variable name is upper case, as it is in an environment.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 60
+
+[gates.test.requires]
+database_url = "env"
