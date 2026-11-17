@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].kind enum
+# The kinds are a closed list: a reader must know how to check each.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "document"
+severity = "required"
+check = { path_any = ["README.md"] }

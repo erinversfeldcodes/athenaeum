@@ -1,0 +1,11 @@
+# Every key an item may use, on a recommended file item that applies to public
+# repositories only and names a glob.
+schema_version = 0
+
+[items.community-issue-templates]
+title = "Issue templates"
+kind = "file"
+severity = "recommended"
+applies = { visibility = ["public"] }
+source = "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests"
+check = { path_any = [".github/ISSUE_TEMPLATE/*", ".github/ISSUE_TEMPLATE.md"] }

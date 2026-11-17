@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].check.path_any minItems
+# An empty list is satisfied by nothing.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = [] }

@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].check.path_any[0] pattern
+# A path is relative to the repository root, so a baseline means the same in every checkout.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["/README.md"] }

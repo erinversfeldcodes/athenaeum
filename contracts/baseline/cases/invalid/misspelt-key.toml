@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'] additionalProperties
+# A misspelt key would be ignored and the item would not mean what its author meant.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+serverity = "required"
+check = { path_any = ["README.md"] }

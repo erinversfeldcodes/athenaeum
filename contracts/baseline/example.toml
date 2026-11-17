@@ -1,0 +1,17 @@
+# A worked example of a baseline: two items, one of each kind. It is checked
+# against the schema on every change, so it cannot drift from what the schema
+# accepts. The real list is baseline/items.toml at the repository root.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/about-community-profiles-for-public-repositories"
+check = { path_any = ["README.md", "README"] }
+
+[items.ci-actions-pinned]
+title = "Every action is pinned to a version, never a branch"
+kind = "workflow"
+severity = "required"
+check = { rule = "actions-pinned" }

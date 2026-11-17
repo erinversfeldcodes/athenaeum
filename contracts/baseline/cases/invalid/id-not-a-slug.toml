@@ -1,0 +1,9 @@
+# violates: $.items propertyNames
+# An id is a lower-case slug, so it can be named in an exception and in a report.
+schema_version = 0
+
+[items.Community_Readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }

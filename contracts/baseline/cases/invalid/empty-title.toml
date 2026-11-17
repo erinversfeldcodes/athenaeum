@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].title minLength
+# An empty title says nothing.
+schema_version = 0
+
+[items.community-readme]
+title = ""
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }

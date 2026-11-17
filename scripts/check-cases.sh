@@ -4,6 +4,7 @@
 #   check-cases.sh manifest
 #   check-cases.sh gate-result
 #   check-cases.sh lock
+#   check-cases.sh baseline
 #
 # The example and every file under cases/valid must be accepted. Every file
 # under cases/invalid must be rejected, for exactly the one reason it states:
@@ -44,6 +45,14 @@ case $contract in
     cases=contracts/lock/cases
     extension=toml
     ;;
+  baseline)
+    schema=contracts/baseline/schema.json
+    example=contracts/baseline/example.toml
+    cases=contracts/baseline/cases
+    extension=toml
+    # The real list is held to the schema it is written against.
+    also=baseline/items.toml
+    ;;
   gate-result)
     schema=contracts/gate-result/schema.json
     example=contracts/gate-result/example.json
@@ -51,7 +60,7 @@ case $contract in
     extension=json
     ;;
   *)
-    echo "usage: check-cases.sh manifest|gate-result|lock" >&2
+    echo "usage: check-cases.sh manifest|gate-result|lock|baseline" >&2
     exit 2
     ;;
 esac
@@ -103,7 +112,7 @@ fi
 
 status=0
 
-valid=("$example" "$cases"/valid/*."$extension")
+valid=("$example" "$cases"/valid/*."$extension" ${also:+"$also"})
 if ! output=$("${VALIDATOR[@]}" --schemafile "$schema" "${valid[@]}" 2>&1); then
   echo "an instance that must be accepted was rejected:" >&2
   echo "$output" >&2
