@@ -66,6 +66,14 @@ const CONTRACTS: &[Contract] = &[
         statement: Statement::FirstLine,
     },
     Contract {
+        output: "baseline_answers_cases.rs",
+        directory: "contracts/baseline-answers",
+        example: "example.toml",
+        extension: "toml",
+        field: "toml",
+        statement: Statement::FirstLine,
+    },
+    Contract {
         output: "gate_result_cases.rs",
         directory: "contracts/gate-result",
         example: "example.json",

@@ -93,6 +93,23 @@ pub mod baseline {
     pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/baseline_cases.rs"));
 }
 
+/// A repository's answers to the baseline: what the baseline cannot decide for it.
+pub mod baseline_answers {
+    /// The answers are TOML, like a manifest, so a case has the same shape.
+    pub use crate::manifest::Case;
+
+    /// The schema, as JSON Schema text.
+    pub const SCHEMA: &str = include_str!("../contracts/baseline-answers/schema.json");
+
+    /// A worked example.
+    pub const EXAMPLE: &str = include_str!("../contracts/baseline-answers/example.toml");
+
+    /// Every case: the worked example, each file under
+    /// `contracts/baseline-answers/cases/valid` and each under `.../invalid`.
+    /// Generated from those directories by `build.rs`.
+    pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/baseline_answers_cases.rs"));
+}
+
 /// The lock: how a managed repository pins the Athenaeum revision it uses.
 pub mod lock {
     /// A lock is TOML, like a manifest, so a case has the same shape.
