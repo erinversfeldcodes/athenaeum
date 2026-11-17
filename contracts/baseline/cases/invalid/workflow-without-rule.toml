@@ -1,0 +1,9 @@
+# violates: $.items['ci-pinned'].check required
+# A workflow check names the rule.
+schema_version = 0
+
+[items.ci-pinned]
+title = "Every action is pinned"
+kind = "workflow"
+severity = "required"
+check = {}

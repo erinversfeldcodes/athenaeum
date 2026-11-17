@@ -1,0 +1,9 @@
+# violates: $.items['ci-pinned'].check additionalProperties
+# A workflow item is checked by a rule, not by paths.
+schema_version = 0
+
+[items.ci-pinned]
+title = "Every action is pinned"
+kind = "workflow"
+severity = "required"
+check = { rule = "actions-pinned", path_any = ["README.md"] }

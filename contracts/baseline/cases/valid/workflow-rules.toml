@@ -1,0 +1,20 @@
+# Each rule a workflow check may name.
+schema_version = 0
+
+[items.ci-actions-pinned]
+title = "Every action is pinned"
+kind = "workflow"
+severity = "required"
+check = { rule = "actions-pinned" }
+
+[items.ci-permissions-declared]
+title = "Every workflow declares its permissions"
+kind = "workflow"
+severity = "required"
+check = { rule = "permissions-declared" }
+
+[items.ci-job-timeouts]
+title = "Every job has a timeout"
+kind = "workflow"
+severity = "recommended"
+check = { rule = "job-timeouts" }

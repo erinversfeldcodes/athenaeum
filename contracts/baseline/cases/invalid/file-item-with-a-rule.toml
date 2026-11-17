@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].check additionalProperties
+# A file item is checked by paths, not by a workflow rule.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"], rule = "actions-pinned" }

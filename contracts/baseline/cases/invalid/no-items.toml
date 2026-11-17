@@ -1,0 +1,5 @@
+# violates: $.items minProperties
+# A baseline with no items asks for nothing.
+schema_version = 0
+
+[items]

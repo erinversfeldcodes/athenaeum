@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'].applies additionalProperties
+# `applies` limits by visibility only; another limit would be ignored.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+applies = { stack = ["rust"] }
+check = { path_any = ["README.md"] }

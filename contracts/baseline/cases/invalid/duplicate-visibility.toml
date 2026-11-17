@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'].applies.visibility uniqueItems
+# Saying the same thing twice is a mistake worth catching.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+applies = { visibility = ["public", "public"] }
+check = { path_any = ["README.md"] }

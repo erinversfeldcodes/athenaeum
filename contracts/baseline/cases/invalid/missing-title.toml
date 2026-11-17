@@ -1,0 +1,8 @@
+# violates: $.items['community-readme'] required
+# A report names an item by its title.
+schema_version = 0
+
+[items.community-readme]
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }

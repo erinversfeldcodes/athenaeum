@@ -1,0 +1,7 @@
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+check = { path_any = ["README.md"] }

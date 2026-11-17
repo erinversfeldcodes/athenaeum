@@ -1,0 +1,9 @@
+# violates: $.items['ci-pinned'].check.rule enum
+# The rules are a closed list: a reader must implement each.
+schema_version = 0
+
+[items.ci-pinned]
+title = "Every action is pinned"
+kind = "workflow"
+severity = "required"
+check = { rule = "pinned" }

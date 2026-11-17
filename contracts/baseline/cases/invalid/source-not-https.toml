@@ -1,0 +1,10 @@
+# violates: $.items['community-readme'].source pattern
+# A source is a link a person can follow, and it is not served in the clear.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+source = "http://docs.github.com/"
+check = { path_any = ["README.md"] }

@@ -1,0 +1,9 @@
+# violates: $.items['community-readme'].severity enum
+# Required fails a check and recommended does not; nothing else is defined.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "optional"
+check = { path_any = ["README.md"] }
