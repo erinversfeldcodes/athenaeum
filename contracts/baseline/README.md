@@ -20,6 +20,12 @@ could not express in a schema.
 |---|---|
 | `file` | one of the listed paths, globs allowed, exists |
 | `workflow` | a named rule holds for every workflow under `.github/workflows` |
+| `setting` | a named repository setting on GitHub is on |
+| `ruleset` | a named rule holds for an active ruleset that targets the default branch |
+
+A `ruleset` item is satisfied by a ruleset and not by classic branch protection. Two of
+its rules compare the ruleset with the repository's own
+[answers](../baseline-answers/README.md): which checks it requires, and who may bypass.
 
 A `required` item that a repository lacks fails the check. A `recommended` item is
 reported and never fails it. An item can say it applies only to public or only to
@@ -27,10 +33,10 @@ private repositories, and can cite the documentation it comes from.
 
 ## What this version does not cover
 
-Repository settings, rulesets, and what a configuration file must contain are not
-here yet. Each is added as a new kind or a new rule, which is a minor version: a
-reader refuses a kind it does not know, so it cannot mistake a check it cannot make
-for one that passed.
+What a configuration file must contain, such as the ecosystems a `dependabot.yml` covers,
+is not here yet. It is added as a new rule, which is a minor version: a reader refuses a
+kind or rule it does not know, so it cannot mistake a check it cannot make for one that
+passed.
 
 A repository states its own answers, such as which licence it uses and any exceptions
-with their reasons, in a file of its own. That file is defined separately.
+with their reasons, in [a file of its own](../baseline-answers/README.md).

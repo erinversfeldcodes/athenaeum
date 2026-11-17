@@ -1,6 +1,6 @@
-# The baseline: what every repository must have, as far as its files and
-# workflows can say. It is checked against contracts/baseline/schema.json on every
-# change. Settings and rulesets come in a later version of the schema.
+# The baseline: what every repository must have, as far as its files, its
+# workflows, its settings on GitHub and its default branch's ruleset can say. It
+# is checked against contracts/baseline/schema.json on every change.
 #
 # An item is `required` (a repository that lacks it fails the check) or
 # `recommended` (it is reported and never fails it). The sources are GitHub's
@@ -90,3 +90,103 @@ kind = "workflow"
 severity = "recommended"
 source = "https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions"
 check = { rule = "job-timeouts" }
+
+[items.security-secret-scanning]
+title = "Secret scanning is on"
+kind = "setting"
+severity = "required"
+applies = { visibility = ["public"] }
+source = "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning"
+check = { setting = "secret-scanning" }
+
+[items.security-push-protection]
+title = "Push protection stops a secret before it is pushed"
+kind = "setting"
+severity = "required"
+applies = { visibility = ["public"] }
+source = "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
+check = { setting = "secret-scanning-push-protection" }
+
+[items.security-dependabot-alerts]
+title = "Dependabot alerts are on"
+kind = "setting"
+severity = "required"
+source = "https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts"
+check = { setting = "dependabot-alerts" }
+
+[items.security-dependabot-updates]
+title = "Dependabot security updates are on"
+kind = "setting"
+severity = "required"
+source = "https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates"
+check = { setting = "dependabot-security-updates" }
+
+[items.security-code-scanning]
+title = "Code scanning is set up"
+kind = "setting"
+severity = "recommended"
+source = "https://docs.github.com/en/code-security/code-scanning/enabling-code-scanning/configuring-default-setup-for-code-scanning"
+check = { setting = "code-scanning" }
+
+[items.repository-delete-branch-on-merge]
+title = "Merged branches are deleted"
+kind = "setting"
+severity = "recommended"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-the-automatic-deletion-of-branches"
+check = { setting = "delete-branch-on-merge" }
+
+[items.repository-description]
+title = "The repository has a description"
+kind = "setting"
+severity = "recommended"
+source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/about-community-profiles-for-public-repositories"
+check = { setting = "description" }
+
+[items.branch-pull-request]
+title = "The default branch takes changes by pull request"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "pull-request-required" }
+
+[items.branch-approval]
+title = "A pull request needs an approval"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "approval-required" }
+
+[items.branch-required-checks]
+title = "The default branch requires the checks the repository names"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "required-checks-match-answers" }
+
+[items.branch-linear-history]
+title = "The default branch keeps a linear history"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "linear-history" }
+
+[items.branch-no-force-push]
+title = "Force pushes to the default branch are refused"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "no-force-push" }
+
+[items.branch-no-deletion]
+title = "The default branch cannot be deleted"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "no-deletion" }
+
+[items.branch-bypass]
+title = "Only who the repository names may bypass the default branch's rules"
+kind = "ruleset"
+severity = "required"
+source = "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+check = { rule = "bypass-matches-answers" }
