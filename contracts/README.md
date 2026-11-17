@@ -7,6 +7,7 @@ whatever produces it and whatever reads it agree.
 |---|---|---|
 | [`gate-result`](./gate-result/schema.json) | What a gate reports when it is run | JSON |
 | [`lock`](./lock/schema.json) | The Athenaeum revision a repository pins, and the skills it takes | TOML |
+| [`baseline`](./baseline/schema.json) | What every repository must have, as a list of items a tool can check | TOML |
 
 The manifest is a contract too, and lives in [`manifest/`](../manifest/README.md)
 because it is the one a person writes by hand.

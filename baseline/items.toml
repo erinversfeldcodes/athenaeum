@@ -1,0 +1,92 @@
+# The baseline: what every repository must have, as far as its files and
+# workflows can say. It is checked against contracts/baseline/schema.json on every
+# change. Settings and rulesets come in a later version of the schema.
+#
+# An item is `required` (a repository that lacks it fails the check) or
+# `recommended` (it is reported and never fails it). The sources are GitHub's
+# own documentation, read on 2026-11-17.
+schema_version = 0
+
+[items.community-readme]
+title = "A README"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"
+check = { path_any = ["README.md", "README", "README.rst", "README.txt"] }
+
+[items.community-licence]
+title = "A licence, or a statement of the terms"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository"
+check = { path_any = ["LICENSE", "LICENSE.md", "LICENSE.txt", "LICENCE", "LICENCE.md", "COPYING"] }
+
+[items.community-security-policy]
+title = "A security policy that says where to report a vulnerability"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/code-security/getting-started/adding-a-security-policy-to-your-repository"
+check = { path_any = ["SECURITY.md", ".github/SECURITY.md", "docs/SECURITY.md"] }
+
+[items.community-contributing]
+title = "A contributing guide"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors"
+check = { path_any = ["CONTRIBUTING.md", ".github/CONTRIBUTING.md", "docs/CONTRIBUTING.md"] }
+
+[items.community-code-of-conduct]
+title = "A code of conduct"
+kind = "file"
+severity = "recommended"
+source = "https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-code-of-conduct-to-your-project"
+check = { path_any = ["CODE_OF_CONDUCT.md", ".github/CODE_OF_CONDUCT.md", "docs/CODE_OF_CONDUCT.md"] }
+
+[items.community-issue-templates]
+title = "Issue templates"
+kind = "file"
+severity = "recommended"
+source = "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
+check = { path_any = [".github/ISSUE_TEMPLATE/*", ".github/ISSUE_TEMPLATE.md"] }
+
+[items.community-pull-request-template]
+title = "A pull request template"
+kind = "file"
+severity = "recommended"
+source = "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
+check = { path_any = [".github/pull_request_template.md", ".github/PULL_REQUEST_TEMPLATE.md", ".github/PULL_REQUEST_TEMPLATE/*", "pull_request_template.md"] }
+
+[items.community-code-owners]
+title = "Code owners"
+kind = "file"
+severity = "recommended"
+source = "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
+check = { path_any = [".github/CODEOWNERS", "CODEOWNERS", "docs/CODEOWNERS"] }
+
+[items.dependencies-dependabot-config]
+title = "Dependabot version updates are configured"
+kind = "file"
+severity = "required"
+source = "https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates"
+check = { path_any = [".github/dependabot.yml", ".github/dependabot.yaml"] }
+
+[items.ci-actions-pinned]
+title = "Every action is used at a version or a commit, never at a branch"
+kind = "workflow"
+severity = "required"
+source = "https://docs.github.com/en/actions/reference/security/secure-use"
+check = { rule = "actions-pinned" }
+
+[items.ci-permissions-declared]
+title = "Every workflow states the permissions its token needs"
+kind = "workflow"
+severity = "required"
+source = "https://docs.github.com/en/actions/reference/security/secure-use"
+check = { rule = "permissions-declared" }
+
+[items.ci-job-timeouts]
+title = "Every job states a timeout"
+kind = "workflow"
+severity = "recommended"
+source = "https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions"
+check = { rule = "job-timeouts" }

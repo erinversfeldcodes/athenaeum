@@ -8,7 +8,7 @@ written so that it is true in any repository and not only the one it came from.
 It contains no logic: the only code is the scripts that check its own content
 and a crate that hands its contracts, unchanged, to a reader that pins them.
 
-> **Status: the manifest, gate result and lock schemas are defined and four skills have been moved in. No packs yet.**
+> **Status: the manifest, gate result, lock and baseline schemas are defined and four skills have been moved in. No packs yet.**
 > The source is publicly visible under a restrictive licence. You may read it,
 > but may not use, copy or distribute it. See [LICENSE](./LICENSE).
 
@@ -50,7 +50,7 @@ athenaeum = { git = "https://github.com/erinversfeldcodes/athenaeum", tag = "v0.
 
 `athenaeum::manifest::SCHEMA` is the schema text, and
 `athenaeum::manifest::CASES` is every case with what it expects. The gate result
-is the same in `athenaeum::gate_result`, and the lock in `athenaeum::lock`. The reader
+is the same in `athenaeum::gate_result`, the lock in `athenaeum::lock`, and the baseline in `athenaeum::baseline`. The reader
 compiles the schema in and runs the cases as its own tests, so it cannot
 disagree with the contract it was built for without failing its build. The
 crate's own version is never bumped; the tag is the version.

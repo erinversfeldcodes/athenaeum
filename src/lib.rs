@@ -73,6 +73,26 @@ pub mod gate_result {
     pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/gate_result_cases.rs"));
 }
 
+/// The baseline: what every repository must have.
+pub mod baseline {
+    /// A baseline is TOML, like a manifest, so a case has the same shape.
+    pub use crate::manifest::Case;
+
+    /// The schema, as JSON Schema text.
+    pub const SCHEMA: &str = include_str!("../contracts/baseline/schema.json");
+
+    /// A worked example.
+    pub const EXAMPLE: &str = include_str!("../contracts/baseline/example.toml");
+
+    /// The items themselves, as TOML text that follows [`SCHEMA`].
+    pub const ITEMS: &str = include_str!("../baseline/items.toml");
+
+    /// Every case: the worked example, each file under
+    /// `contracts/baseline/cases/valid` and each under `.../invalid`.
+    /// Generated from those directories by `build.rs`.
+    pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/baseline_cases.rs"));
+}
+
 /// The lock: how a managed repository pins the Athenaeum revision it uses.
 pub mod lock {
     /// A lock is TOML, like a manifest, so a case has the same shape.

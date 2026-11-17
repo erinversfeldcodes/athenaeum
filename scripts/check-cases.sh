@@ -50,6 +50,8 @@ case $contract in
     example=contracts/baseline/example.toml
     cases=contracts/baseline/cases
     extension=toml
+    # The real list is held to the schema it is written against.
+    also=baseline/items.toml
     ;;
   gate-result)
     schema=contracts/gate-result/schema.json
@@ -110,7 +112,7 @@ fi
 
 status=0
 
-valid=("$example" "$cases"/valid/*."$extension")
+valid=("$example" "$cases"/valid/*."$extension" ${also:+"$also"})
 if ! output=$("${VALIDATOR[@]}" --schemafile "$schema" "${valid[@]}" 2>&1); then
   echo "an instance that must be accepted was rejected:" >&2
   echo "$output" >&2
