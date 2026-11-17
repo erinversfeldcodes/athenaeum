@@ -1,0 +1,10 @@
+# violates: $.bootstrap[0] required
+# A step says what it runs.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+timeout_seconds = 60

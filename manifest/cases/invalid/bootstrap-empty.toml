@@ -1,0 +1,8 @@
+# violates: $.bootstrap minItems
+# A bootstrap with no steps prepares nothing; leave the key out.
+schema_version = 0
+bootstrap = []
+
+[components.app]
+root = "."
+paths = ["**"]

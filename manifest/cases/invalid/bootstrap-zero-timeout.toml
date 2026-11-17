@@ -1,0 +1,11 @@
+# violates: $.bootstrap[0].timeout_seconds minimum
+# A limit of nothing stops the step before it starts.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = ["npm", "ci"]
+timeout_seconds = 0

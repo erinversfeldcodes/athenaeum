@@ -1,0 +1,11 @@
+# violates: $.bootstrap[0].run minItems
+# A step must run something.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[[bootstrap]]
+run = []
+timeout_seconds = 60
