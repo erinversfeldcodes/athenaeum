@@ -1,0 +1,15 @@
+# A gate may declare the environment variables it needs. "secret" is an
+# environment variable whose value must never be printed or logged.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 3600
+
+[gates.test.requires]
+DATABASE_URL = "env"
+API_KEY = "secret"
