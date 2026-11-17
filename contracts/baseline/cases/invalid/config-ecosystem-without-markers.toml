@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems.cargo required
+# An ecosystem says what shows a repository uses it.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { directory = "parent" } } }

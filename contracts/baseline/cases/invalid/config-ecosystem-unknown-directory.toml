@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems.cargo.directory enum
+# A directory is the marker file's parent, or the root.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "child" } } }

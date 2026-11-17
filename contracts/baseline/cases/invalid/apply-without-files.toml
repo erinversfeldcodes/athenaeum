@@ -1,5 +1,5 @@
-# violates: $.items['community-readme'].apply required
-# An apply says which files it writes.
+# violates: $.items['community-readme'].apply anyOf
+# An apply says which files it writes, or which it generates.
 schema_version = 0
 
 [items.community-readme]

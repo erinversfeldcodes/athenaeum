@@ -1,0 +1,10 @@
+# violates: $.items['deps-x'] not
+# Only a file item is satisfied by writing a file.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "parent" } } }
+apply = { generate = { generator = "dependabot", destination = ".github/dependabot.yml" } }

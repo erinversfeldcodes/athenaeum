@@ -1,0 +1,10 @@
+# violates: $.items['deps-y'].apply.generate additionalProperties
+# A misspelt key would be ignored, and the file written somewhere unintended.
+schema_version = 0
+
+[items.deps-y]
+title = "Dependabot is configured"
+kind = "file"
+severity = "required"
+check = { path_any = [".github/dependabot.yml"] }
+apply = { generate = { generator = "dependabot", destination = ".github/dependabot.yml", overwrite = true } }

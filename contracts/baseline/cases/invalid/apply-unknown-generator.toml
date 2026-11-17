@@ -1,0 +1,10 @@
+# violates: $.items['deps-y'].apply.generate.generator enum
+# The generators are a closed list: a tool must implement each.
+schema_version = 0
+
+[items.deps-y]
+title = "Dependabot is configured"
+kind = "file"
+severity = "required"
+check = { path_any = [".github/dependabot.yml"] }
+apply = { generate = { generator = "renovate", destination = ".github/dependabot.yml" } }

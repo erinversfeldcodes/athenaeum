@@ -1,0 +1,10 @@
+# violates: $.items['deps-y'].apply not
+# An apply copies templates or generates a file, not both.
+schema_version = 0
+
+[items.deps-y]
+title = "Dependabot is configured"
+kind = "file"
+severity = "required"
+check = { path_any = [".github/dependabot.yml"] }
+apply = { files = [{ template = "README.md", destination = "README.md" }], generate = { generator = "dependabot", destination = ".github/dependabot.yml" } }

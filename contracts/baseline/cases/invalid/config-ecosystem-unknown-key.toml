@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.ecosystems.cargo additionalProperties
+# A misspelt key would be ignored, and the ecosystem would be found nowhere.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems", ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "parent", marker = ["x"] } } }

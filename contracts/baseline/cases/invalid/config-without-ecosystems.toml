@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check required
+# The rule needs the ecosystems it is to check.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "dependabot-covers-ecosystems" }

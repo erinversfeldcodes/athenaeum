@@ -1,0 +1,9 @@
+# violates: $.items['deps-x'].check.rule enum
+# The rules are a closed list: a reader must implement each.
+schema_version = 0
+
+[items.deps-x]
+title = "Dependabot covers the ecosystems"
+kind = "config"
+severity = "required"
+check = { rule = "renovate-covers-ecosystems", ecosystems = { cargo = { markers = ["Cargo.toml"], directory = "parent" } } }
