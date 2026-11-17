@@ -1,0 +1,44 @@
+# Every rule a ruleset check may name.
+schema_version = 0
+
+[items.branch-pull-request]
+title = "The default branch takes changes by pull request"
+kind = "ruleset"
+severity = "required"
+check = { rule = "pull-request-required" }
+
+[items.branch-approval]
+title = "A pull request needs an approval"
+kind = "ruleset"
+severity = "required"
+check = { rule = "approval-required" }
+
+[items.branch-required-checks]
+title = "The default branch requires the checks the repository names"
+kind = "ruleset"
+severity = "required"
+check = { rule = "required-checks-match-answers" }
+
+[items.branch-linear-history]
+title = "The default branch keeps a linear history"
+kind = "ruleset"
+severity = "required"
+check = { rule = "linear-history" }
+
+[items.branch-no-force-push]
+title = "Force pushes to the default branch are refused"
+kind = "ruleset"
+severity = "required"
+check = { rule = "no-force-push" }
+
+[items.branch-no-deletion]
+title = "The default branch cannot be deleted"
+kind = "ruleset"
+severity = "required"
+check = { rule = "no-deletion" }
+
+[items.branch-bypass]
+title = "Only who the repository names may bypass the rules"
+kind = "ruleset"
+severity = "required"
+check = { rule = "bypass-matches-answers" }

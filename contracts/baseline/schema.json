@@ -42,8 +42,8 @@
           "minLength": 1
         },
         "kind": {
-          "description": "How the item is checked. `file`: one of some paths exists. `workflow`: a rule holds for the repository's workflows.",
-          "enum": ["file", "workflow"]
+          "description": "How the item is checked. `file`: one of some paths exists. `workflow`: a rule holds for the repository's workflows. `setting`: a repository setting on GitHub is on. `ruleset`: a rule holds for the default branch's ruleset.",
+          "enum": ["file", "workflow", "setting", "ruleset"]
         },
         "severity": {
           "description": "`required`: a repository that lacks it fails the check. `recommended`: it is reported and never fails the check.",
@@ -81,6 +81,14 @@
         {
           "if": { "required": ["kind"], "properties": { "kind": { "const": "workflow" } } },
           "then": { "properties": { "check": { "$ref": "#/$defs/workflow-check" } } }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "setting" } } },
+          "then": { "properties": { "check": { "$ref": "#/$defs/setting-check" } } }
+        },
+        {
+          "if": { "required": ["kind"], "properties": { "kind": { "const": "ruleset" } } },
+          "then": { "properties": { "check": { "$ref": "#/$defs/ruleset-check" } } }
         }
       ]
     },
@@ -105,6 +113,44 @@
       "required": ["rule"],
       "properties": {
         "rule": { "enum": ["actions-pinned", "permissions-declared", "job-timeouts"] }
+      }
+    },
+    "setting-check": {
+      "description": "Satisfied when the named setting is on for the repository on GitHub. The settings are a closed list, each read by the tool that checks it: `secret-scanning`, `secret-scanning-push-protection`, `dependabot-alerts`, `dependabot-security-updates`, `code-scanning`, `delete-branch-on-merge`, and `description` (the repository has one).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["setting"],
+      "properties": {
+        "setting": {
+          "enum": [
+            "secret-scanning",
+            "secret-scanning-push-protection",
+            "dependabot-alerts",
+            "dependabot-security-updates",
+            "code-scanning",
+            "delete-branch-on-merge",
+            "description"
+          ]
+        }
+      }
+    },
+    "ruleset-check": {
+      "description": "Satisfied when a rule holds for an active ruleset that targets the default branch. Classic branch protection does not satisfy it. The rules are a closed list, each defined by the tool that checks it: `pull-request-required`; `approval-required` (at least one approving review); `required-checks-match-answers` (the required status checks include every check the repository names in its baseline answers as `required_checks`); `linear-history`; `no-force-push`; `no-deletion`; `bypass-matches-answers` (who may bypass is what the repository names as `default_branch_bypass`).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rule"],
+      "properties": {
+        "rule": {
+          "enum": [
+            "pull-request-required",
+            "approval-required",
+            "required-checks-match-answers",
+            "linear-history",
+            "no-force-push",
+            "no-deletion",
+            "bypass-matches-answers"
+          ]
+        }
       }
     }
   }

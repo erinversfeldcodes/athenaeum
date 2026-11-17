@@ -1,0 +1,9 @@
+# violates: $.items['security-x'].check.setting enum
+# The settings are a closed list: a reader must know how to read each.
+schema_version = 0
+
+[items.security-x]
+title = "A setting"
+kind = "setting"
+severity = "required"
+check = { setting = "branch-protection" }

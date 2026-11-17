@@ -1,0 +1,9 @@
+# violates: $.items['branch-x'].check required
+# A ruleset check names the rule.
+schema_version = 0
+
+[items.branch-x]
+title = "A rule"
+kind = "ruleset"
+severity = "required"
+check = {}
