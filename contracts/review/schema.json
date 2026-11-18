@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/erinversfeldcodes/athenaeum/blob/main/contracts/review/schema.json",
+  "title": "Review verdict, version 0",
+  "description": "What a review lens returns for one diff. Written as JSON. Every key is listed here: an unknown key is an error, so a misspelt one fails instead of being ignored. The verdict decides which findings must be present, so a verdict cannot contradict its own findings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "lens", "commit", "verdict", "findings"],
+  "properties": {
+    "schema_version": {
+      "description": "The version of this schema the verdict follows. A reader that does not know the version must refuse the verdict.",
+      "const": 0
+    },
+    "lens": {
+      "description": "The lens that reviewed, by name: `rust`, `test-truth`, and so on.",
+      "type": "string",
+      "minLength": 1
+    },
+    "commit": {
+      "description": "The commit the review was pinned to: forty lower-case hexadecimal digits. A verdict about a diff that has since moved says nothing about the new one.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "verdict": {
+      "description": "`approved`: no finding blocks. `needs_revision`: at least one finding blocks and the work can be fixed in place. `failed`: the approach or a critical flaw cannot be fixed by revising, so there is at least one P0 finding and the work needs to be planned again.",
+      "enum": ["approved", "needs_revision", "failed"]
+    },
+    "findings": {
+      "description": "What the review found, blocking or not. Empty when it found nothing.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "notes": {
+      "description": "Observations that are not findings: what was done well, alternatives worth raising with a person. Never blocking.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["verdict"], "properties": { "verdict": { "const": "approved" } } },
+      "then": {
+        "properties": {
+          "findings": { "items": { "properties": { "blocking": { "const": false } } } }
+        }
+      }
+    },
+    {
+      "if": { "required": ["verdict"], "properties": { "verdict": { "const": "needs_revision" } } },
+      "then": {
+        "properties": {
+          "findings": {
+            "contains": { "required": ["blocking"], "properties": { "blocking": { "const": true } } }
+          }
+        }
+      }
+    },
+    {
+      "if": { "required": ["verdict"], "properties": { "verdict": { "const": "failed" } } },
+      "then": {
+        "properties": {
+          "findings": {
+            "contains": { "required": ["severity"], "properties": { "severity": { "const": "P0" } } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["severity", "blocking", "title", "evidence"],
+      "properties": {
+        "severity": {
+          "description": "`P0`: must not merge in any form: a critical flaw, a required item missing, or an approach that cannot be revised into shape. `P1`: must be fixed before merge. `P2`: should be fixed; blocks only if the lens says so. `P3`: a nit.",
+          "enum": ["P0", "P1", "P2", "P3"]
+        },
+        "blocking": {
+          "description": "Whether this finding stops the change from being approved. A P0 finding always blocks.",
+          "type": "boolean"
+        },
+        "axis": {
+          "description": "Which of the lens's axes the finding belongs to, by the lens's own name for it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "description": "What is wrong, in a few words.",
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "description": "What was seen: a file and line, or the output of a command. A finding without evidence is an opinion, and a reader must not act on it.",
+          "type": "string",
+          "minLength": 1
+        },
+        "location": {
+          "description": "Where, when it is one place.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "line"],
+          "properties": {
+            "path": { "type": "string", "minLength": 1 },
+            "line": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "revision": {
+          "description": "What to change. Required for a blocking finding, so that whoever revises is told, not left to guess.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": { "required": ["blocking"], "properties": { "blocking": { "const": true } } },
+          "then": { "required": ["revision"] }
+        },
+        {
+          "if": { "required": ["severity"], "properties": { "severity": { "const": "P0" } } },
+          "then": { "properties": { "blocking": { "const": true } } }
+        }
+      ]
+    }
+  }
+}

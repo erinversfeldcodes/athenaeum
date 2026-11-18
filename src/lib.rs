@@ -73,6 +73,31 @@ pub mod gate_result {
     pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/gate_result_cases.rs"));
 }
 
+/// The review verdict: what a review lens returns for one diff.
+pub mod review {
+    /// The schema, as JSON Schema text.
+    pub const SCHEMA: &str = include_str!("../contracts/review/schema.json");
+
+    /// A worked example: an approval with a nit and a note.
+    pub const EXAMPLE: &str = include_str!("../contracts/review/example.json");
+
+    /// One review verdict and what a reader must do with it.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub struct Case {
+        /// The case's file name without its extension.
+        pub name: &'static str,
+        /// The review verdict itself, as JSON text.
+        pub json: &'static str,
+        /// What a reader must do with it.
+        pub expectation: crate::Expectation,
+    }
+
+    /// Every case: the worked example, each file under
+    /// `contracts/review/cases/valid` and each under `.../invalid`.
+    /// Generated from those directories by `build.rs`.
+    pub const CASES: &[Case] = include!(concat!(env!("OUT_DIR"), "/review_cases.rs"));
+}
+
 /// The baseline: what every repository must have.
 pub mod baseline {
     /// A baseline is TOML, like a manifest, so a case has the same shape.

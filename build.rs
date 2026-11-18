@@ -81,6 +81,14 @@ const CONTRACTS: &[Contract] = &[
         field: "json",
         statement: Statement::Sidecar,
     },
+    Contract {
+        output: "review_cases.rs",
+        directory: "contracts/review",
+        example: "example.json",
+        extension: "json",
+        field: "json",
+        statement: Statement::Sidecar,
+    },
 ];
 
 fn main() {

@@ -9,6 +9,7 @@ whatever produces it and whatever reads it agree.
 | [`lock`](./lock/schema.json) | The Athenaeum revision a repository pins, and the skills it takes | TOML |
 | [`baseline`](./baseline/schema.json) | What every repository must have, as a list of items a tool can check | TOML |
 | [`baseline-answers`](./baseline-answers/schema.json) | A repository's own answers to the baseline, and the exceptions it takes | TOML |
+| [`review`](./review/schema.json) | What a review lens returns for one diff: a verdict and its findings | JSON |
 
 The manifest is a contract too, and lives in [`manifest/`](../manifest/README.md)
 because it is the one a person writes by hand.
