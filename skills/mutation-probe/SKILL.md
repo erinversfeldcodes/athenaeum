@@ -65,6 +65,12 @@ The conventions in [the skills README](../README.md) apply.
   that is interrupted still comes out.
 - **A fault that does not apply is not a survivor.** See step 4. Check before you
   conclude a test is weak.
+- **Make sure the run uses the code you edited.** Some toolchains cache compiled
+  output by file size and modification time, so a probe that changes a file to
+  another of the same size within the same second can run the old code and report
+  a survivor that is nothing of the kind. Clear the cache, or run with it
+  disabled, for probes, and check one known fault is caught before trusting a run
+  of survivors.
 - **Do not probe in a shared or live environment.** A probe edits code and runs
   it: do it only where an accident harms nothing, and with every external
   program stood in for. A probe of a safety check must not use the real thing it
