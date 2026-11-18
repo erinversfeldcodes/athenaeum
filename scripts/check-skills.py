@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Check that every skill is well formed and cites only what exists.
+"""Check that every skill and every review lens is well formed and cites only
+what exists.
 
-A skill is `skills/<name>/SKILL.md`. Two things are checked here.
+A skill is `skills/<name>/SKILL.md`. A lens is `packs/<name>/review.md`, the
+review content of a stack's pack. Two things are checked here, for both, and a
+lens also states whether its verdict blocks.
 
 Its front matter names it and describes it. The name must match the
 directory, because the directory is how a skill is found and the name is how
@@ -57,7 +60,7 @@ def key_exists(key):
     return True
 
 
-def problems_in(skill_file):
+def problems_in(skill_file, lens=False):
     directory = skill_file.parent.name
     text = skill_file.read_text()
     where = skill_file.relative_to(ROOT)
@@ -76,6 +79,8 @@ def problems_in(skill_file):
         yield f"{where}: its name is '{fields.get('name')}', but its directory is '{directory}'"
     if not fields.get("description"):
         yield f"{where}: has no description, so nothing can tell when to use it"
+    if lens and fields.get("blocking") not in ("true", "false"):
+        yield f"{where}: must say whether its verdict blocks, `blocking: true` or `blocking: false`"
 
     for key in sorted(set(CITATION.findall(text))):
         if not key_exists(key):
@@ -84,7 +89,9 @@ def problems_in(skill_file):
 
 def main():
     skills = sorted((ROOT / "skills").glob("*/SKILL.md"))
+    lenses = sorted((ROOT / "packs").glob("*/review.md"))
     problems = [problem for skill in skills for problem in problems_in(skill)]
+    problems += [problem for lens in lenses for problem in problems_in(lens, lens=True)]
 
     for directory in sorted(p for p in (ROOT / "skills").iterdir() if p.is_dir()):
         if not (directory / "SKILL.md").is_file():
@@ -95,7 +102,10 @@ def main():
     if problems:
         return 1
 
-    print(f"{len(skills)} skills, each named for its directory and citing only declared manifest keys")
+    print(
+        f"{len(skills)} skills and {len(lenses)} lenses, each named for its directory "
+        "and citing only declared manifest keys"
+    )
     return 0
 
 
