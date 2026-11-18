@@ -47,6 +47,9 @@ A panic in a library is a crash in somebody else's process.
   must not be swapped should not have the same type.
 - A state machine or a result with variants is an enum, not a pair of booleans.
 - `Option` and `Result` are handled explicitly, not defaulted away.
+- A quantity that must be exact (money, a count of items) is an integer in its
+  smallest unit, never a float. A float that is rounded or truncated on the way to
+  an integer gives a wrong answer for some inputs, and that is a finding.
 
 ### 4. Unsafe (judgement)
 
