@@ -43,6 +43,8 @@ that covers it, not a finding of yours.
    against the diff and the tree.
    - A required item that is absent is a P0 finding, whatever the report says.
    - An item that is present and not tested is a finding.
+   - Name `requirements` as the axis of the findings this step makes, so they are
+     told apart from the lens's own.
    - Do this with [completion-audit](../completion-audit/SKILL.md) in mind: it
      is the author's version of the same pass, and a reviewer should not trust
      that it was done.
