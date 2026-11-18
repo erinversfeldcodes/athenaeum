@@ -1,0 +1,14 @@
+{
+  "schema_version": 0,
+  "lens": "rust",
+  "commit": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b",
+  "verdict": "needs_revision",
+  "findings": [
+    {
+      "severity": "P3",
+      "blocking": false,
+      "title": "A name that says what it holds",
+      "evidence": "src/lib.rs:12 calls the count `n`."
+    }
+  ]
+}

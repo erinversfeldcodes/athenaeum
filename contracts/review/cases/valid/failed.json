@@ -1,0 +1,15 @@
+{
+  "schema_version": 0,
+  "lens": "rust",
+  "commit": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b",
+  "verdict": "failed",
+  "findings": [
+    {
+      "severity": "P0",
+      "blocking": true,
+      "title": "A required item is missing",
+      "evidence": "The ticket asks for a retry limit; no module in the diff implements one.",
+      "revision": "Implement the retry limit the ticket names, with a test."
+    }
+  ]
+}

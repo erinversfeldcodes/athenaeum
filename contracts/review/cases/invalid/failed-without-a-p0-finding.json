@@ -1,0 +1,15 @@
+{
+  "schema_version": 0,
+  "lens": "rust",
+  "commit": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b",
+  "verdict": "failed",
+  "findings": [
+    {
+      "severity": "P1",
+      "blocking": true,
+      "title": "An error is discarded",
+      "evidence": "src/fetch.rs:40 drops the error from `parse` with `let _ =`.",
+      "revision": "Return the error from `fetch` and handle it in the caller."
+    }
+  ]
+}

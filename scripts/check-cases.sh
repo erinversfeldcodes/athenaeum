@@ -6,6 +6,7 @@
 #   check-cases.sh lock
 #   check-cases.sh baseline
 #   check-cases.sh baseline-answers
+#   check-cases.sh review
 #
 # The example and every file under cases/valid must be accepted. Every file
 # under cases/invalid must be rejected, for exactly the one reason it states:
@@ -66,8 +67,14 @@ case $contract in
     cases=contracts/gate-result/cases
     extension=json
     ;;
+  review)
+    schema=contracts/review/schema.json
+    example=contracts/review/example.json
+    cases=contracts/review/cases
+    extension=json
+    ;;
   *)
-    echo "usage: check-cases.sh manifest|gate-result|lock|baseline|baseline-answers" >&2
+    echo "usage: check-cases.sh manifest|gate-result|lock|baseline|baseline-answers|review" >&2
     exit 2
     ;;
 esac
@@ -88,6 +95,7 @@ wording_of() {
     minProperties) echo 'should be non-empty|does not have enough properties' ;;
     not) echo 'should not be valid under' ;;
     anyOf) echo 'is not valid under any of the given schemas' ;;
+    contains) echo 'does not contain items matching the given schema' ;;
     *) return 1 ;;
   esac
 }

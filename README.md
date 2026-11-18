@@ -8,7 +8,7 @@ written so that it is true in any repository and not only the one it came from.
 It contains no logic: the only code is the scripts that check its own content
 and a crate that hands its contracts, unchanged, to a reader that pins them.
 
-> **Status: the manifest, gate result, lock, baseline and baseline answers schemas are defined and four skills have been moved in. No packs yet.**
+> **Status: the manifest, gate result, lock, baseline, baseline answers and review verdict schemas are defined and five skills have been moved in, including the reviewer contract. No packs yet.**
 > The source is publicly visible under a restrictive licence. You may read it,
 > but may not use, copy or distribute it. See [LICENSE](./LICENSE).
 
