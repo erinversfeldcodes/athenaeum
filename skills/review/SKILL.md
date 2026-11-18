@@ -32,7 +32,10 @@ that covers it, not a finding of yours.
    the old commit and says so; it is not about the new one.
 
 2. **Do not write code.** Do not edit the ticket, the plan, the tests or the
-   implementation. A reviewer that fixes what it finds has stopped reviewing,
+   implementation. The one exception is a probe: the test-truth lens breaks the
+   behaviour a test guards to see whether the test notices
+   ([mutation-probe](../mutation-probe/SKILL.md)), and puts it back. A probe is
+   evidence-gathering, is never part of what you deliver, and is never left behind. A reviewer that fixes what it finds has stopped reviewing,
    and the person or run that wrote the change never learns what was wrong with
    it. Say what to change, in the finding.
 
