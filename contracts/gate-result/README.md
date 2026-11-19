@@ -10,7 +10,7 @@ report one of these.
 - [`cases/`](./cases) holds results that must be accepted and results that must
   be rejected. See [how a contract is held to account](../README.md).
 
-## The four outcomes
+## The five outcomes
 
 | Outcome | Exit code | Also |
 |---|---|---|
@@ -18,6 +18,11 @@ report one of these.
 | `failed` | not 0 | |
 | `timed_out` | none | The command was stopped, so it has no exit code of its own. |
 | `skipped` | none | A `reason` is required: why the gate was not run. |
+| `deferred` | none | The gate could not be run where it was, and was left to the check the manifest names. A `reason` and the `ci_check` are required. |
+
+A deferred gate is not a pass and is not a skip. A skip says the gate had nothing to
+check. A deferral says the gate has something to check and that something else was
+trusted to check it, so whoever settles the change owes it a look at that check.
 
 The outcome decides which fields must be present, so a result cannot say it
 passed with a failing exit code. `command` is a list of arguments, with the

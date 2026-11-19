@@ -1,0 +1,1 @@
+{ "schema_version": 0, "gate": "test", "outcome": "deferred", "reason": "DATABASE_URL (environment variable) is not set", "ci_check": "test", "command": ["just", "test"], "duration_ms": 0 }

@@ -133,6 +133,11 @@
           "minProperties": 1,
           "propertyNames": { "pattern": "^[A-Z][A-Z0-9_]*$" },
           "additionalProperties": { "enum": ["env", "secret"] }
+        },
+        "ci_check": {
+          "description": "The name of the check on a pull request that exercises the same work as this gate. A runner that cannot run the gate where it is, because something it requires is missing, its command is not there, or it ran out of time, may leave it to that check, and says so. A gate that runs and fails is a failure whichever check names it. The repository is saying the check is equivalent, and whoever settles the pull request is expected to find that check passed. Absent means the gate is never left to a check.",
+          "type": "string",
+          "minLength": 1
         }
       }
     },
