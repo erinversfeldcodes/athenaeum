@@ -1,0 +1,12 @@
+# violates: $.gates.test.ci_check type
+# One check is named, as a string.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 60
+ci_check = ["test", "e2e"]

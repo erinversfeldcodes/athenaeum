@@ -1,0 +1,16 @@
+# A gate may name the check on a pull request that exercises the same work, so
+# that a workspace which cannot run the gate can leave it to that check.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[gates.test]
+run = ["just", "test"]
+timeout_seconds = 3600
+ci_check = "test"
+
+[gates.test.requires]
+DATABASE_URL = "env"
+API_KEY = "secret"
