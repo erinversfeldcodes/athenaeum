@@ -66,6 +66,12 @@ A panic in a library is a crash in somebody else's process.
 - A client or connection pool is built once and reused, not per call.
 - Tasks are spawned for work that is concurrent, not for every small operation.
 - A retry has backoff and jitter. A fixed interval under load is a stampede.
+- A request, job or message that can be queued, delayed or refused tells its
+  caller which: admitted, queued, refused (with a status and when to retry), or
+  failed (and why). It is not held silent until a timeout. Back-pressure is a
+  documented contract beside the rest of the interface, and callers honour it.
+- Queue time and refusals are observable: a log line, a metric or a header, so a
+  failed run shows what happened and nobody has to guess.
 
 ### 6. Serialisation and configuration (judgement)
 
@@ -111,8 +117,9 @@ A panic in a library is a crash in somebody else's process.
   credential in the source; a required item the ticket names that is missing.
 - **P1**: `unwrap()` or `expect()` in library code on a value that can fail; a
   discarded error; a blocking call in async code; an outbound request with no
-  timeout; a test that makes a real network call or asserts only that a call
-  returned `Ok`.
+  timeout; a change that adds or lengthens a wait, queue, limit or timeout on a
+  request path and leaves the caller to guess what happened; a test that makes a
+  real network call or asserts only that a call returned `Ok`.
 - **P2**: an avoidable clone on a large value; a client built per call; no
   property test for a parser of untrusted input; an unjustified dependency.
 - **P3**: naming and structure that a reader would trip over.

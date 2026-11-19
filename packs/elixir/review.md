@@ -64,6 +64,13 @@ whatever the file is generated from, and the next generation will undo it.
   worker.
 - State a process holds is state that can be lost on a crash, or it is rebuilt
   from somewhere durable when the process restarts.
+- A request, job or message that can be queued, delayed or refused tells its
+  caller which: admitted, queued, refused (with a status and when to retry), or
+  failed (and why). A pool, a semaphore or a bounded queue that makes a caller
+  wait does not hold it silent until a timeout. Back-pressure is a documented
+  contract beside the rest of the interface, and callers honour it.
+- Queue time and refusals are observable: a log line, a telemetry event or a
+  header, so a failed run shows what happened and nobody has to guess.
 
 ### 5. Background jobs, if the change adds or changes one (judgement)
 
@@ -124,8 +131,10 @@ whatever the file is generated from, and the next generation will undo it.
   missing.
 - **P1**: a multi-step write that is not a transaction; raw outside input in a
   query; a job that is not idempotent; a `rescue` that swallows an error; a
-  business rule in a controller; an N+1; a test that asserts nothing a wrong
-  implementation would fail; a concurrency test that cannot fail.
+  business rule in a controller; an N+1; a change that adds or lengthens a wait,
+  queue, limit or timeout on a request path and leaves the caller to guess what
+  happened; a test that asserts nothing a wrong implementation would fail; a
+  concurrency test that cannot fail.
 - **P2**: a public function with no `@spec`; an index that is probably wanted; a
   context reaching into another's internals once, where a public function is one
   step away.
