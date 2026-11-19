@@ -12,7 +12,7 @@ A repository names the pack a component uses in its manifest
 ## Layout
 
 ```
-packs/<name>/review.md     the review lens for the stack
+packs/<name>/review.md     the review lens for the stack, or for every change
 ```
 
 More files will sit beside it as they are moved in: the specialist's content,
@@ -35,6 +35,11 @@ blocking: true
 - The name is the directory's name.
 - `blocking` says whether the lens's verdict stops a change by default. A
   repository can override it in its own manifest.
+- `applies: always`, optionally, says the lens is asked for on every change that is
+  reviewed, and not only when a component names its pack. A component names one
+  pack, so a lens about the change itself (does it do what its ticket asked) or
+  about the system it runs in cannot be chosen by a path. No other value is
+  accepted. A lens that does not say it applies only where a component names it.
 
 Then it lists the **axes**, each with what to check and why. An axis is
 either mechanical or a judgement:
