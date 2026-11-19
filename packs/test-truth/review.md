@@ -98,13 +98,40 @@ say what wrong implementation the test would still pass for.
   behaviour and seeing that the failures differ. If they do not, leave the tests
   narrow.
 
+### 5. How the test waits (judgement)
+
+A wait is acceptable only for an event that someone emits. Time is not one, and a
+test that waits for it is guessing about a system it could have asked.
+
+- **Time is not an event.** A fixed sleep, a longer timeout, a higher retry count
+  or a retry on the test's own clock is not a fix for a test that fails. It moves
+  the failure to a slower machine. This is a finding whether or not it is the
+  change's answer to a failure.
+- **A wait names its event and who emits it.** "Waits for the response to the
+  sign-up request" is an answer. "Waits until it is ready" is not.
+- **The test can tell the cases apart.** If a failure could be slow, queued,
+  refused or never answered and the test cannot say which, it lacks a signal. Ask
+  for the system to supply one, and for the failure message to carry what the
+  system said, not only that time ran out.
+- **A retry follows the system's stated advice and is bounded.** Where the system
+  says when to try again, wait that long, a small fixed number of times, then
+  assert the real expectation. A persistent refusal is a real failure. A test
+  never skips on a server error: a skip that fires on a failure cannot fail.
+- **A test that changes state owns its data.** A shared user or fixture that makes
+  identical runs differ is a cause in shared state, not in time, and no wait
+  fixes it.
+
 ## Severity for this lens
 
 - **P1** (blocks): a test the ticket's requirements rest on stays green when the
   behaviour is broken; a required behaviour has no test that would fail without it;
   a mock-echo or tautology stands in for a required guarantee.
+- **P1** (blocks), for how a test waits: a fixed sleep, a raised or added timeout, or
+  a retry on the test's own clock, whether or not it answers a failure; a test that
+  skips on a server error.
 - **P2**: any other smell above in a test that is not load-bearing; a guarantee at
-  the wrong layer; narrow tests that should be consolidated.
+  the wrong layer; narrow tests that should be consolidated; a wait that names its
+  event less precisely than it could; a test that changes state it shares.
 - **P3**: a test name that does not say what it guards.
 
 This lens has no P0 of its own. A required test that is absent altogether is a
