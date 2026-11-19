@@ -17,8 +17,8 @@
       "minLength": 1
     },
     "outcome": {
-      "description": "`passed`: the command exited 0. `failed`: it exited non-zero. `timed_out`: it was stopped for running longer than the gate allows, so it has no exit code of its own. `skipped`: it was not run, and the reason says why.",
-      "enum": ["passed", "failed", "timed_out", "skipped"]
+      "description": "`passed`: the command exited 0. `failed`: it exited non-zero. `timed_out`: it was stopped for running longer than the gate allows, so it has no exit code of its own. `skipped`: it was not run, and the reason says why. `deferred`: it could not be run where it was, and was left to the check on the pull request that the manifest names for it; the reason says why. A deferred gate is not a pass: it is a gate someone else must have seen pass.",
+      "enum": ["passed", "failed", "timed_out", "skipped", "deferred"]
     },
     "command": {
       "description": "The program and arguments that were run, as a list, with any toolchain wrapper already applied. For a skipped gate, the command that would have been run.",
@@ -36,8 +36,13 @@
       "type": "integer",
       "minimum": 0
     },
+    "ci_check": {
+      "description": "The check the gate was left to. Required for `deferred`, and present for nothing else.",
+      "type": "string",
+      "minLength": 1
+    },
     "reason": {
-      "description": "Why the gate was skipped. Required for `skipped`.",
+      "description": "Why the gate was skipped or deferred. Required for both.",
       "type": "string",
       "minLength": 1
     },
@@ -62,6 +67,11 @@
     {
       "if": { "required": ["outcome"], "properties": { "outcome": { "const": "skipped" } } },
       "then": { "required": ["reason"], "not": { "required": ["exit_code"] } }
+    },
+    {
+      "if": { "required": ["outcome"], "properties": { "outcome": { "const": "deferred" } } },
+      "then": { "required": ["reason", "ci_check"], "not": { "required": ["exit_code"] } },
+      "else": { "not": { "required": ["ci_check"] } }
     }
   ]
 }

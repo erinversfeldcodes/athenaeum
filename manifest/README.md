@@ -20,7 +20,7 @@ Version 0 holds only what something reads today.
 | `schema_version` | Which version of the schema this manifest follows. |
 | `toolchain` | How to enter the repository's pinned toolchain before running anything. |
 | `components` | What the buildable parts are, which files belong to each, and how each is tested and linted. |
-| `gates` | Which commands decide whether a change may proceed, which changes each applies to, and which environment variables and secrets each needs. |
+| `gates` | Which commands decide whether a change may proceed, which changes each applies to, which environment variables and secrets each needs, and which check on a pull request exercises the same work. |
 | `bootstrap` | The steps that prepare a fresh workspace so the gates can run in it. |
 | `docs` | Where the documents a skill may need are kept. |
 
@@ -39,6 +39,11 @@ added when something reads it.
   not run the gate, so a missing prerequisite is never mistaken for a failing
   test. A `secret` is never printed or logged. Naming each variable once, as a
   key, makes a duplicate or a variable that is both kinds impossible to write.
+- **A gate can name the check that stands in for it.** `ci_check` is the name of a
+  check on a pull request that runs the same work. A runner that cannot run the gate
+  where it is may leave it to that check and say so, and the pull request is then not
+  settled until that check has passed. The repository is the one that says the two are
+  equivalent. A gate that runs and fails is a failure whatever check it names.
 - **A path is relative and stays inside the repository.** The manifest then
   means the same thing in every checkout.
 
