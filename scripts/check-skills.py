@@ -81,6 +81,8 @@ def problems_in(skill_file, lens=False):
         yield f"{where}: has no description, so nothing can tell when to use it"
     if lens and fields.get("blocking") not in ("true", "false"):
         yield f"{where}: must say whether its verdict blocks, `blocking: true` or `blocking: false`"
+    if lens and "applies" in fields and fields["applies"] != "always":
+        yield f"{where}: `applies` can only be `always` (a lens that applies to every change), not '{fields['applies']}'"
 
     for key in sorted(set(CITATION.findall(text))):
         if not key_exists(key):
