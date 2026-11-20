@@ -71,7 +71,9 @@ Whatever you cannot read, say so. A requirement that depends on it is
    - What the evidence shows is the requirement, and not something nearby.
 
 4. **Give each requirement a status.**
-   - **met**: evidence of the first two kinds, checked as above. Where the
+   - **met**: evidence of the first two kinds, checked as above. Evidence of the
+     kind *structure* or *claim* never makes a requirement met, however it is
+     worded: such a requirement is *not met*, or *owed*. Where the
      ticket's goal concerns a running system, a test is not enough: the
      behaviour has also been observed in the environment the goal is about,
      after the change merged. Until it has been, the requirement is *owed* that
@@ -151,6 +153,22 @@ Decides: <evidence | a person>, because <the reason in one line>
 ## Could not check
 - <what was out of reach>
 ```
+
+Before you write the verdict, check it against your own table. A verdict that
+breaks one of these is refused by the contract, and the evaluation fails and
+leaves nothing:
+
+- Its `verdict` is the worst status among the requirements, in the order above:
+  not met, then cannot judge, then owed, then met. A cannot judge requirement
+  beside an `owed` verdict is wrong; the verdict is `cannot_judge`.
+- A requirement with the status `met` has evidence of the kind `observed` or
+  `test`, never `structure` or `claim`.
+- A requirement that is not met, owed or cannot judge has a `gap` that says what
+  is missing, never empty. A met requirement leaves `gap` out.
+- A `met` verdict has every requirement met and the goal `achieved`; an `owed`
+  verdict has at least one entry in `owed`.
+- `decides` is `evidence` only when the verdict is met, every requirement is
+  settled by evidence, and the ticket is not an epic. Otherwise it is `person`.
 
 - **met** means the evidence supports closing the ticket. Nothing here closes it.
   Closing is the decision of whoever called this skill, and `Decides` says who
