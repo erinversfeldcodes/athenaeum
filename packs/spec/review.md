@@ -77,6 +77,11 @@ A ticket is closed only when every item that affects it is resolved.
   closes it.
 - A pull request that says it closes the ticket while an item remains open is a finding,
   whatever else is right about it.
+- How far it got is read from the pull request's description: the line that closes or
+  refers to the ticket, and what it says remains. A note the agent leaves for the runtime
+  in its working directory (a resolution file, a commit message file) is not committed
+  and is not in the tree, so its absence there is not a finding. What matters is that the
+  description says the same thing, and says it as plainly as the change deserves.
 
 ## Severity for this lens
 
