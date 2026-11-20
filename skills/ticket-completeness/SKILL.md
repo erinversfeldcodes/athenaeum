@@ -117,8 +117,17 @@ Whatever you cannot read, say so. A requirement that depends on it is
 ## The verdict
 
 The worst status among the requirements decides it, in this order: *not met*,
-then *cannot judge*, then *owed*, then *met*. Write it in this shape, so a
-runtime can read the verdict and a person can read the rest.
+then *cannot judge*, then *owed*, then *met*.
+
+When the caller names a file to write the verdict to, write it as JSON that
+passes [the completeness contract](../../contracts/completeness/README.md), with
+the same content as below: its `schema_version`, the `ticket` and the `commit`
+you were asked about, the `verdict`, `decides` and `decides_because`, whether the
+ticket is an `epic`, each requirement with what it is `settled_by`, its `status`
+and its `evidence`, the `goal`, what is `owed`, what is `not_filed` and what you
+`could_not_check`. The contract refuses a verdict that contradicts its own table,
+so write the requirements first and take the verdict from them. When no file is
+named, write it in this shape, so a person can read it.
 
 ```
 ## Verdict: <met | not met | owed | cannot judge>
