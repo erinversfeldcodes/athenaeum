@@ -88,7 +88,7 @@ bar for done.
    is only true if the other review ran. Work out which components the change
    touches and which review lenses that requires, and demand a recorded verdict
    for each, pinned to the commit it covered. A missing one is **not done**.
-   In one audit of a campaign, nearly every ticket had a design review and one
+   In one audit of an epic and its tickets, nearly every ticket had a design review and one
    had any review of the other kind, across hundreds of files, because the
    mechanical checks were green throughout and nobody noticed that none of the
    judgement had happened.

@@ -37,7 +37,11 @@ The conventions in [the skills README](../README.md) apply.
    for one person to review with care in one sitting. As a rule of thumb,
    that is more than about three hundred lines of production code. When it is
    too big, propose the smallest coherent first slice and list the rest as
-   work to follow.
+   work to follow. A split is linked
+   in the tracker and not only mentioned in the text: the original is the
+   parent, each piece is created as its sub-issue, and an order between pieces
+   is a blocked-by link. A ticket with children is an epic. Say in the brief
+   which piece is which, so whoever creates them can make the links.
 
 4. **Ask only what changes the outcome.** After investigating you will be
    left with a few real forks. Good candidates:
