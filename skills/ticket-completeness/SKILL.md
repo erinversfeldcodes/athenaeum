@@ -1,6 +1,6 @@
 ---
 name: ticket-completeness
-description: Judge whether a ticket's goal is met, requirement by requirement, against the state the repository is in now and the evidence gathered since its changes merged. Ends in a verdict (met, not met, owed or cannot judge) with the evidence for each requirement, and for anything owed the command, the condition and the threshold that will settle it. Use when deciding whether a ticket can be closed, when a ticket stays open after its pull request merged, when its owed measurements may have come due, or when asked whether a ticket is really finished.
+description: Judge whether a ticket's goal is met, requirement by requirement, against the state the repository is in now and the evidence gathered since its changes merged. Ends in a verdict (met, not met, owed or cannot judge) with the evidence for each requirement, for anything owed the command, the condition and the threshold that will settle it, and whether the evidence settles the ticket or a person must. Use when deciding whether a ticket can be closed, when a ticket stays open after its pull request merged, when its owed measurements may have come due, or when asked whether a ticket is really finished.
 ---
 
 # ticket-completeness
@@ -40,7 +40,10 @@ Whatever you cannot read, say so. A requirement that depends on it is
    thing it rules out. Quote its words. Keep what the ticket wants separate
    from how it says that will be shown, and from why it wants it, which is its
    goal. A requirement that can be read two ways is recorded both ways, not
-   resolved to the easier one.
+   resolved to the easier one. Mark each requirement by what can settle it:
+   *evidence* (a measurement, a test, an observation anyone could repeat) or
+   *a person* (taste, design, wording, or a decision the ticket leaves to
+   someone). A requirement you cannot tell is marked *a person*.
 
 2. **Find the evidence for each**, and rank it. A requirement about behaviour
    needs one of the first two kinds.
@@ -68,7 +71,11 @@ Whatever you cannot read, say so. A requirement that depends on it is
    - What the evidence shows is the requirement, and not something nearby.
 
 4. **Give each requirement a status.**
-   - **met**: evidence of the first two kinds, checked as above.
+   - **met**: evidence of the first two kinds, checked as above. Where the
+     ticket's goal concerns a running system, a test is not enough: the
+     behaviour has also been observed in the environment the goal is about,
+     after the change merged. Until it has been, the requirement is *owed* that
+     observation, and says what will produce it.
    - **not met**: the evidence shows it is not, or there is only structure or a
      claim where behaviour was asked for.
    - **owed**: it cannot be settled yet, because the evidence does not exist
@@ -90,6 +97,22 @@ Whatever you cannot read, say so. A requirement that depends on it is
    ticket behind them. A deferral with no ticket is unfinished work and is
    listed. The same sweep is in [completion-audit](../completion-audit/SKILL.md).
 
+7. **Say who decides.** The caller closes or does not; you say who should
+   decide, and why.
+   - *Evidence*, when the verdict is met, every requirement is marked as
+     settled by evidence, and the ticket is not an epic. Nothing left needs
+     anyone's taste or choice.
+   - *A person*, when any requirement is marked as needing one, when the
+     ticket is an epic, or when you could not tell.
+
+   An epic is a ticket that was broken into sub-tickets, or that its author
+   marked as a campaign. What its parts add up to is more than any one
+   requirement's evidence shows, so it is always for a person to judge
+   complete. Walk its sub-tickets: each one's verdict and evidence, whether
+   any is still open or owed, and whether together they are what the epic
+   asked for. Report that as a roll-up for the person. Do not judge the epic
+   complete yourself.
+
 ## The verdict
 
 The worst status among the requirements decides it, in this order: *not met*,
@@ -101,8 +124,10 @@ runtime can read the verdict and a person can read the rest.
 
 State judged: <the default branch's commit, and the time>
 
-| # | Requirement (the ticket's words) | Status | Evidence (kind, and where) | Gap or next step |
-|---|---|---|---|---|
+Decides: <evidence | a person>, because <the reason in one line>
+
+| # | Requirement (the ticket's words) | Settled by | Status | Evidence (kind, and where) | Gap or next step |
+|---|---|---|---|---|---|
 
 ## Goal
 <achieved, not achieved, or owed, and why in a sentence or two>
@@ -118,7 +143,9 @@ State judged: <the default branch's commit, and the time>
 ```
 
 - **met** means the evidence supports closing the ticket. Nothing here closes it.
-  Closing is the decision of whoever called this skill.
+  Closing is the decision of whoever called this skill, and `Decides` says who
+  the evidence leaves it to: when it says a person, a met verdict is the
+  evidence put in front of them and not a reason to close.
 - **owed** means the ticket stays open and the next evaluation is only of the
   owed items. Write each one so a later run can pick it up without redoing the
   rest.
