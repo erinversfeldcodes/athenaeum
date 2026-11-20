@@ -105,8 +105,9 @@ Whatever you cannot read, say so. A requirement that depends on it is
    - *A person*, when any requirement is marked as needing one, when the
      ticket is an epic, or when you could not tell.
 
-   An epic is a ticket that was broken into sub-tickets, or that its author
-   marked as a campaign. What its parts add up to is more than any one
+   An epic is a ticket that has sub-tickets, as the tracker records them (a
+   parent with sub-issues), or that its author says is one. What its parts add
+   up to is more than any one
    requirement's evidence shows, so it is always for a person to judge
    complete. Walk its sub-tickets: each one's verdict and evidence, whether
    any is still open or owed, and whether together they are what the epic

@@ -74,6 +74,10 @@ Depends on: <other proposed tickets, or none>
 ```
 
 - A ticket is small enough for one change a person can review with care.
+- `Parent` and `Depends on` are the tracker's own relations, not decoration: a
+  proposed ticket is created as a sub-issue of its parent, and each ticket it
+  depends on becomes a blocked-by link. A ticket with children is an epic, so
+  proposing several tickets under one makes it one.
 - Say the order, and what can go in parallel.
 - A requirement that cannot be settled now becomes a ticket that says what it is
   waiting for, not a loose sentence.
