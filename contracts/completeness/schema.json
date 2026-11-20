@@ -302,9 +302,8 @@
           "$ref": "#/$defs/evidence"
         },
         "gap": {
-          "description": "What is missing, or the next step. Required unless the requirement is met.",
-          "type": "string",
-          "minLength": 1
+          "description": "What is missing, or the next step. Required, and not empty, unless the requirement is met; a met requirement may leave it out or empty.",
+          "type": "string"
         }
       },
       "allOf": [
@@ -339,7 +338,12 @@
           "else": {
             "required": [
               "gap"
-            ]
+            ],
+            "properties": {
+              "gap": {
+                "minLength": 1
+              }
+            }
           }
         }
       ]
