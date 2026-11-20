@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/erinversfeldcodes/athenaeum/blob/main/contracts/completeness/schema.json",
+  "title": "Completeness verdict, version 0",
+  "description": "What judging whether a ticket's goal is met returns for one ticket at one commit of its default branch. Written as JSON. Every key is listed here: an unknown key is an error, so a misspelt one fails instead of being ignored. The verdict decides what its requirements must say, so a verdict cannot contradict its own table.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ticket",
+    "commit",
+    "verdict",
+    "decides",
+    "decides_because",
+    "epic",
+    "requirements",
+    "goal",
+    "owed",
+    "not_filed",
+    "could_not_check"
+  ],
+  "properties": {
+    "schema_version": {
+      "description": "The version of this schema the verdict follows. A reader that does not know the version must refuse the verdict.",
+      "const": 0
+    },
+    "ticket": {
+      "description": "The ticket's number in its repository.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "commit": {
+      "description": "The commit of the default branch the verdict was judged at: forty lower-case hexadecimal digits. A verdict about a state that has since moved says nothing about the new one.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "verdict": {
+      "description": "The worst status among the requirements, in this order: `not_met`, `cannot_judge`, `owed`, `met`. `met` means the evidence supports closing the ticket.",
+      "enum": [
+        "met",
+        "not_met",
+        "owed",
+        "cannot_judge"
+      ]
+    },
+    "decides": {
+      "description": "Who should decide whether to close the ticket. `evidence`: the verdict is met, every requirement is settled by evidence, and the ticket is not an epic, so nothing left needs a person. `person`: anything else, including when it could not be told.",
+      "enum": [
+        "evidence",
+        "person"
+      ]
+    },
+    "decides_because": {
+      "description": "The reason for `decides`, in a line.",
+      "type": "string",
+      "minLength": 1
+    },
+    "epic": {
+      "description": "Whether the ticket is an epic: it has sub-issues in the tracker, or its author says it is one. A person always decides an epic.",
+      "type": "boolean"
+    },
+    "requirements": {
+      "description": "The ticket's requirements in its own words, with the evidence for each.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/requirement"
+      }
+    },
+    "goal": {
+      "$ref": "#/$defs/goal"
+    },
+    "owed": {
+      "description": "What cannot be settled yet, with what will settle it. Empty unless the verdict is `owed` or a requirement is.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/owed"
+      }
+    },
+    "not_filed": {
+      "description": "Residue the change or the ticket mentions with no ticket behind it.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "could_not_check": {
+      "description": "What was out of reach, so a requirement that depends on it is `cannot_judge`.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "verdict"
+        ],
+        "properties": {
+          "verdict": {
+            "const": "met"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requirements": {
+            "items": {
+              "properties": {
+                "status": {
+                  "const": "met"
+                }
+              }
+            }
+          },
+          "goal": {
+            "properties": {
+              "status": {
+                "const": "achieved"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "verdict"
+        ],
+        "properties": {
+          "verdict": {
+            "const": "not_met"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requirements": {
+            "contains": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "const": "not_met"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "verdict"
+        ],
+        "properties": {
+          "verdict": {
+            "const": "cannot_judge"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requirements": {
+            "items": {
+              "properties": {
+                "status": {
+                  "enum": [
+                    "met",
+                    "owed",
+                    "cannot_judge"
+                  ]
+                }
+              }
+            },
+            "contains": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "const": "cannot_judge"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "verdict"
+        ],
+        "properties": {
+          "verdict": {
+            "const": "owed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "requirements": {
+            "items": {
+              "properties": {
+                "status": {
+                  "enum": [
+                    "met",
+                    "owed"
+                  ]
+                }
+              }
+            },
+            "contains": {
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "const": "owed"
+                }
+              }
+            }
+          },
+          "owed": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "decides"
+        ],
+        "properties": {
+          "decides": {
+            "const": "evidence"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verdict": {
+            "const": "met"
+          },
+          "epic": {
+            "const": false
+          },
+          "requirements": {
+            "items": {
+              "properties": {
+                "settled_by": {
+                  "const": "evidence"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "settled_by",
+        "status"
+      ],
+      "properties": {
+        "text": {
+          "description": "The requirement in the ticket's words.",
+          "type": "string",
+          "minLength": 1
+        },
+        "settled_by": {
+          "description": "What can settle it. `evidence`: a measurement, a test or an observation anyone could repeat. `person`: taste, design, wording, or a decision the ticket leaves to someone. One that could not be told is `person`.",
+          "enum": [
+            "evidence",
+            "person"
+          ]
+        },
+        "status": {
+          "description": "`met`: evidence of the kind `observed` or `test`, checked. `not_met`: the evidence shows it is not, or there is only structure or a claim where behaviour was asked for. `owed`: it cannot be settled yet and will be when something happens. `cannot_judge`: the evidence may exist and could not be seen.",
+          "enum": [
+            "met",
+            "not_met",
+            "owed",
+            "cannot_judge"
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "gap": {
+          "description": "What is missing, or the next step. Required unless the requirement is met.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "status"
+            ],
+            "properties": {
+              "status": {
+                "const": "met"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "evidence"
+            ],
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "observed",
+                      "test"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "required": [
+              "gap"
+            ]
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "where"
+      ],
+      "properties": {
+        "kind": {
+          "description": "`observed`: seen in the real system after the change. `test`: a test that failed before the change and passes after it. `structure`: the code or the setting exists. `claim`: a description or a tick, not yet looked at.",
+          "enum": [
+            "observed",
+            "test",
+            "structure",
+            "claim"
+          ]
+        },
+        "where": {
+          "description": "Where to find it: a command and its output, a run, a file and line.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "why"
+      ],
+      "properties": {
+        "status": {
+          "description": "Whether what the ticket is for has happened.",
+          "enum": [
+            "achieved",
+            "not_achieved",
+            "owed",
+            "cannot_judge"
+          ]
+        },
+        "why": {
+          "description": "Why, in a sentence or two.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "owed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "what",
+        "run",
+        "when",
+        "settled_by"
+      ],
+      "properties": {
+        "what": {
+          "description": "What is owed.",
+          "type": "string",
+          "minLength": 1
+        },
+        "run": {
+          "description": "The command that produces the evidence.",
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "description": "The condition under which it can be run.",
+          "type": "string",
+          "minLength": 1
+        },
+        "settled_by": {
+          "description": "The threshold that decides it.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

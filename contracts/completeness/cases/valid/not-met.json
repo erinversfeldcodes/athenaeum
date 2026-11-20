@@ -1,0 +1,33 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "not_met",
+  "decides": "person",
+  "decides_because": "a requirement is not met",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "The key no longer depends on the image",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "a run on main"
+      }
+    },
+    {
+      "text": "A cold run finishes inside its limit",
+      "settled_by": "evidence",
+      "status": "not_met",
+      "gap": "only the structure changed, no run was measured"
+    }
+  ],
+  "goal": {
+    "status": "not_achieved",
+    "why": "the limit is unproven"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": []
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "met",
+  "decides": "evidence",
+  "decides_because": "every requirement is settled by observed evidence and the ticket is not an epic",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "a",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "structure",
+        "where": "a run on main"
+      }
+    }
+  ],
+  "goal": {
+    "status": "achieved",
+    "why": "the cache stopped missing for reasons the repository does not control"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": []
+}

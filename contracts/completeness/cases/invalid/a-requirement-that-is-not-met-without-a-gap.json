@@ -1,0 +1,23 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "not_met",
+  "decides": "person",
+  "decides_because": "x",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "a",
+      "settled_by": "evidence",
+      "status": "not_met"
+    }
+  ],
+  "goal": {
+    "status": "not_achieved",
+    "why": "x"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": []
+}

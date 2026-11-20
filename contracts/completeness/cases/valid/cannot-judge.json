@@ -1,0 +1,35 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "cannot_judge",
+  "decides": "person",
+  "decides_because": "the evidence could not be read",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "The key no longer depends on the image",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "a run on main"
+      }
+    },
+    {
+      "text": "A cold run finishes inside its limit",
+      "settled_by": "evidence",
+      "status": "cannot_judge",
+      "gap": "the run's logs were out of reach"
+    }
+  ],
+  "goal": {
+    "status": "cannot_judge",
+    "why": "the logs could not be read"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": [
+    "the run logs"
+  ]
+}
