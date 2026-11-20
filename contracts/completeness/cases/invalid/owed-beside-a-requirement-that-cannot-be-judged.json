@@ -1,0 +1,37 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "owed",
+  "decides": "person",
+  "decides_because": "x",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "a",
+      "settled_by": "evidence",
+      "status": "owed",
+      "gap": "what is missing"
+    },
+    {
+      "text": "b",
+      "settled_by": "evidence",
+      "status": "cannot_judge",
+      "gap": "what is missing"
+    }
+  ],
+  "goal": {
+    "status": "owed",
+    "why": "later"
+  },
+  "owed": [
+    {
+      "what": "w",
+      "run": "r",
+      "when": "n",
+      "settled_by": "t"
+    }
+  ],
+  "not_filed": [],
+  "could_not_check": []
+}

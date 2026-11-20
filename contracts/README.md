@@ -10,6 +10,7 @@ whatever produces it and whatever reads it agree.
 | [`baseline`](./baseline/schema.json) | What every repository must have, as a list of items a tool can check | TOML |
 | [`baseline-answers`](./baseline-answers/schema.json) | A repository's own answers to the baseline, and the exceptions it takes | TOML |
 | [`review`](./review/schema.json) | What a review lens returns for one diff: a verdict and its findings | JSON |
+| [`completeness`](./completeness/schema.json) | What judging whether a ticket's goal is met returns: a verdict, its evidence and what is owed | JSON |
 
 The manifest is a contract too, and lives in [`manifest/`](../manifest/README.md)
 because it is the one a person writes by hand.

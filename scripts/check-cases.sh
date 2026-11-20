@@ -7,6 +7,7 @@
 #   check-cases.sh baseline
 #   check-cases.sh baseline-answers
 #   check-cases.sh review
+#   check-cases.sh completeness
 #
 # The example and every file under cases/valid must be accepted. Every file
 # under cases/invalid must be rejected, for exactly the one reason it states:
@@ -73,8 +74,14 @@ case $contract in
     cases=contracts/review/cases
     extension=json
     ;;
+  completeness)
+    schema=contracts/completeness/schema.json
+    example=contracts/completeness/example.json
+    cases=contracts/completeness/cases
+    extension=json
+    ;;
   *)
-    echo "usage: check-cases.sh manifest|gate-result|lock|baseline|baseline-answers|review" >&2
+    echo "usage: check-cases.sh manifest|gate-result|lock|baseline|baseline-answers|review|completeness" >&2
     exit 2
     ;;
 esac

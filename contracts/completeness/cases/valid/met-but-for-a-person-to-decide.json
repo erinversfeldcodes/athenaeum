@@ -1,0 +1,36 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "met",
+  "decides": "person",
+  "decides_because": "a requirement is a matter of wording",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "The key no longer depends on the image",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "a run on main"
+      }
+    },
+    {
+      "text": "The message reads clearly",
+      "settled_by": "person",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "read by the reviewer"
+      }
+    }
+  ],
+  "goal": {
+    "status": "achieved",
+    "why": "the cache stopped missing for reasons the repository does not control"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": []
+}

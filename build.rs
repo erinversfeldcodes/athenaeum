@@ -89,6 +89,14 @@ const CONTRACTS: &[Contract] = &[
         field: "json",
         statement: Statement::Sidecar,
     },
+    Contract {
+        output: "completeness_cases.rs",
+        directory: "contracts/completeness",
+        example: "example.json",
+        extension: "json",
+        field: "json",
+        statement: Statement::Sidecar,
+    },
 ];
 
 fn main() {
