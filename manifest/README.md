@@ -22,6 +22,7 @@ Version 0 holds only what something reads today.
 | `components` | What the buildable parts are, which files belong to each, and how each is tested and linted. |
 | `gates` | Which commands decide whether a change may proceed, which changes each applies to, which environment variables and secrets each needs, and which check on a pull request exercises the same work. |
 | `bootstrap` | The steps that prepare a fresh workspace so the gates can run in it. |
+| `branch` | How a ticket's branch is named: a `template` containing `{key}`, and optionally `{slug}`. |
 | `docs` | Where the documents a skill may need are kept. |
 
 Review policy, workspace bootstrap and the drive are not in version 0. Each is
