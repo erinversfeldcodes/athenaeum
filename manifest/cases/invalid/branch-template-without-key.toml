@@ -1,0 +1,10 @@
+# violates: $.branch.template pattern
+# Without {key} two tickets would be given the same branch name.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "heph/{slug}"

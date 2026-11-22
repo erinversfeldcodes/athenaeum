@@ -1,0 +1,9 @@
+# The smallest template is the ticket key alone.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "{key}"

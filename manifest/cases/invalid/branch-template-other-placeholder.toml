@@ -1,0 +1,10 @@
+# violates: $.branch.template pattern
+# Only {key} and {slug} are placeholders.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "{owner}/{key}"

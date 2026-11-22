@@ -1,0 +1,11 @@
+# violates: $.branch additionalProperties
+# `prefix` for `template`. Ignoring it would name every branch the default way.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "heph/{key}"
+prefix = "heph"

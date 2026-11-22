@@ -1,0 +1,10 @@
+# violates: $.branch.template pattern
+# A space is not allowed in a branch name.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "heph/{key} {slug}"
