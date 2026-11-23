@@ -57,6 +57,10 @@ when_paths = ["api/**", "web/**"]
 timeout_seconds = 3600
 result = "json"
 
+# How a ticket's branch is named. {key} is required; {slug} is optional.
+[branch]
+template = "heph/{key}-{slug}"
+
 [docs]
 architecture = "docs/architecture.md"
 stories = ["docs/stories"]

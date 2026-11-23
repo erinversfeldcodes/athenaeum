@@ -1,0 +1,9 @@
+# A repository names its branches with a template. {key} is required, {slug} optional.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+
+[branch]
+template = "heph/{key}-{slug}"

@@ -1,0 +1,7 @@
+# A manifest with no branch table is valid: the branch name is the reader's default.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+

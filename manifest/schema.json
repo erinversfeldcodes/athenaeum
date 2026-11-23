@@ -31,6 +31,7 @@
       "minItems": 1,
       "items": { "$ref": "#/$defs/bootstrap-step" }
     },
+    "branch": { "$ref": "#/$defs/branch" },
     "docs": { "$ref": "#/$defs/docs" }
   },
   "$defs": {
@@ -156,6 +157,18 @@
           "description": "How long the step may run before it is stopped and counted as failed. Required, because a step with no limit can hold a workload open for ever.",
           "type": "integer",
           "minimum": 1
+        }
+      }
+    },
+    "branch": {
+      "description": "How the repository names the branch a ticket's work is done on. Absent means the reader's default.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "template": {
+          "description": "The branch name, with `{key}` standing for the ticket key and, optionally, `{slug}` for a short slug of its title. It must contain `{key}`, so that two tickets are never given the same branch. It may not contain whitespace or any other placeholder.",
+          "type": "string",
+          "pattern": "^(?:[^\\s{}]|\\{slug\\})*\\{key\\}(?:[^\\s{}]|\\{slug\\}|\\{key\\})*$"
         }
       }
     },
