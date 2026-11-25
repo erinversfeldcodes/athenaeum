@@ -1,0 +1,7 @@
+# test_changed is optional.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+test = ["npm", "test"]

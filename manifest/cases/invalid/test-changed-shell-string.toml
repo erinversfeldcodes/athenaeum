@@ -1,0 +1,8 @@
+# violates: $.components.app.test_changed type
+# A command is a list of arguments, not a string.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+test_changed = "npm test --"

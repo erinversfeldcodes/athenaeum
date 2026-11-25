@@ -1,0 +1,8 @@
+# test_changed is a command; the changed paths are appended to it.
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+test = ["npm", "test"]
+test_changed = ["npx", "vitest", "related", "--run"]
