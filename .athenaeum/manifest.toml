@@ -1,0 +1,52 @@
+schema_version = 0
+
+# Hephaestium run on Athenaeum's own tickets. The gates are the checks CI runs that a workspace
+# can run too; the contract cases need check-jsonschema and are left to CI's `contracts` job.
+
+[components.rust]
+pack = "rust"
+root = "."
+paths = ["src/**", "tests/**", "build.rs", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml"]
+
+# The manifest schema and the contracts, with the cases that grade a reader of them.
+[components.contracts]
+root = "."
+paths = ["manifest/**", "contracts/**"]
+
+# What is read as prose: the skills, the packs and the repository's own account of itself.
+[components.docs]
+root = "."
+paths = ["skills/**", "packs/**", "README.md", "AGENTS.md", "CONTRIBUTING.md"]
+
+# The pipeline and the scripts it and the releases run.
+[components.platform]
+root = "."
+paths = [".github/**", "scripts/**", ".athenaeum/**", "baseline/**", ".gitignore"]
+
+[gates.format-rust]
+run = ["cargo", "fmt", "--all", "--check"]
+when_paths = ["src/**", "tests/**", "build.rs", "Cargo.toml", "Cargo.lock"]
+timeout_seconds = 300
+
+[gates.lint-rust]
+run = ["cargo", "clippy", "--all-targets", "--locked", "--", "-D", "warnings"]
+when_paths = ["src/**", "tests/**", "build.rs", "Cargo.toml", "Cargo.lock"]
+timeout_seconds = 1800
+
+[gates.test-rust]
+run = ["cargo", "test", "--locked"]
+when_paths = ["src/**", "tests/**", "build.rs", "manifest/**", "contracts/**", "Cargo.toml", "Cargo.lock"]
+timeout_seconds = 1800
+ci_check = "rust"
+
+[gates.doc-links]
+run = ["bash", "scripts/check-doc-links.sh"]
+when_paths = ["**/*.md"]
+timeout_seconds = 300
+ci_check = "docs"
+
+[gates.skills]
+run = ["python3", "scripts/check-skills.py"]
+when_paths = ["skills/**", "scripts/check-skills.py"]
+timeout_seconds = 300
+ci_check = "skills"
