@@ -15,6 +15,7 @@ root = "api"
 paths = ["api/**"]
 generated = ["api/src/gen/**"]
 test = ["cargo", "test"]
+test_changed = ["cargo", "test", "--test-threads=4", "--"]
 lint = [
   ["cargo", "fmt", "--check"],
   ["cargo", "clippy", "--all-targets", "--", "-D", "warnings"],
@@ -25,6 +26,7 @@ pack = "typescript"
 root = "web"
 paths = ["web/**"]
 test = ["npm", "test"]
+test_changed = ["npx", "vitest", "related", "--run"]
 lint = [["npm", "run", "lint"]]
 
 # Prepare a fresh checkout so the gates can run in it, in order.

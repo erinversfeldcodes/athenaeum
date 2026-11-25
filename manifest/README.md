@@ -25,6 +25,15 @@ Version 0 holds only what something reads today.
 | `branch` | How a ticket's branch is named: a `template` containing `{key}`, and optionally `{slug}`. |
 | `docs` | Where the documents a skill may need are kept. |
 
+## Testing only what changed
+
+`components.<name>.test_changed` is optional. It is a command, as `test` is
+(a list, never a string), and the paths of the changed files under the
+component's root are appended to it as arguments. The paths are relative to
+the component's root, not the repository's. It is not run when no file of the
+component changed. `test` is unchanged: it still runs the component's whole
+suite.
+
 Review policy, workspace bootstrap and the drive are not in version 0. Each is
 added when something reads it.
 

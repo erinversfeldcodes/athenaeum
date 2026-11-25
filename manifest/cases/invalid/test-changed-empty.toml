@@ -1,0 +1,7 @@
+# violates: $.components.app.test_changed minItems
+schema_version = 0
+
+[components.app]
+root = "."
+paths = ["**"]
+test_changed = []

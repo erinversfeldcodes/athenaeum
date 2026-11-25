@@ -98,6 +98,10 @@
           "description": "Runs its tests.",
           "$ref": "#/$defs/command"
         },
+        "test_changed": {
+          "description": "Runs only the tests for the files a change touched: the command, with the paths of the changed files under the component's root appended as arguments, relative to that root.",
+          "$ref": "#/$defs/command"
+        },
         "lint": {
           "description": "Its format and lint checks, each a command that changes nothing and fails on a finding.",
           "type": "array",
