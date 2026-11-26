@@ -58,6 +58,9 @@ Whatever you cannot read, say so. A requirement that depends on it is
       looked.
 
 3. **Check the evidence is what it appears to be.**
+   - You read or ran it yourself, in this evaluation. What an earlier verdict, a
+     description or a comment established, and you did not look at again, is a
+     *claim*, however sound it was then.
    - It is about the default branch as it is, not about a branch that has
      since changed.
    - The merged changes did not remove, skip or weaken a test to get to green.
@@ -77,7 +80,9 @@ Whatever you cannot read, say so. A requirement that depends on it is
      ticket's goal concerns a running system, a test is not enough: the
      behaviour has also been observed in the environment the goal is about,
      after the change merged. Until it has been, the requirement is *owed* that
-     observation, and says what will produce it.
+     observation, and says what will produce it. A requirement whose only
+     evidence you did not re-check is *cannot judge*, or *owed* where something
+     will produce fresh evidence, and says what would settle it.
    - **not met**: the evidence shows it is not, or there is only structure or a
      claim where behaviour was asked for.
    - **owed**: it cannot be settled yet, because the evidence does not exist
@@ -85,7 +90,12 @@ Whatever you cannot read, say so. A requirement that depends on it is
      deploy, a decision that is a person's. An owed item is not a failure, but
      it is not met either. It must name what produces the evidence, the
      command, the condition under which that can be run, and the threshold
-     that decides it.
+     that decides it. It also says whether it *arrives* or *needs an action*. It
+     arrives when the condition will come about with nobody doing anything: a
+     later run, a date, a count that ordinary use reaches. If it will not, name
+     the action and who does it. Ask what would have to happen, and whether
+     anything now in place makes it happen: a condition that a cache, a skip or
+     a fallback now prevents will not arrive.
    - **cannot judge**: the evidence may exist and you cannot see it.
 
 5. **Judge the goal, not only the list.** With every line met, ask whether what
@@ -145,7 +155,7 @@ Decides: <evidence | a person>, because <the reason in one line>
 <achieved, not achieved, or owed, and why in a sentence or two>
 
 ## Owed
-- owed: <what> | run: <command> | when: <condition> | settled-by: <threshold>
+- owed: <what> | run: <command> | when: <condition> | settled-by: <threshold> | arrives, or needs: <action, and who>
 
 ## Not filed
 - <residue with no ticket behind it>
@@ -162,7 +172,12 @@ leaves nothing:
   not met, then cannot judge, then owed, then met. A cannot judge requirement
   beside an `owed` verdict is wrong; the verdict is `cannot_judge`.
 - A requirement with the status `met` has evidence of the kind `observed` or
-  `test`, never `structure` or `claim`.
+  `test`, never `structure` or `claim`, and you checked it in this evaluation.
+- Where the schema you are given has `checked` on evidence, set it on every
+  piece of evidence, truthfully. Where it has `arrival` on an owed item, set it,
+  with the `action` when one is needed. Where the schema has neither, say both
+  in the `where` and `when` text; a field the schema does not declare is
+  refused.
 - A requirement that is not met, owed or cannot judge has a `gap` that says what
   is missing, never empty. A met requirement leaves `gap` out.
 - A `met` verdict has every requirement met and the goal `achieved`; an `owed`

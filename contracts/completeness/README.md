@@ -28,7 +28,8 @@ The worst status among the requirements decides it, in this order.
 
 A `met` requirement has evidence of the kind `observed` or `test`. Structure and a
 claim show something was built or said, not that it works, so they cannot make a
-requirement met.
+requirement met. Evidence that says it was not `checked` in this evaluation cannot
+either.
 
 ## Who decides
 
@@ -42,7 +43,12 @@ for an epic, or when it is not met.
 
 An owed item has what is owed, the command that produces it, the condition under
 which it can be run and the threshold that decides it, so that a later evaluation
-can pick up only what is owed.
+can pick up only what is owed. It may say its `arrival`: whether it `arrives` by
+itself or is `needs_action`, and then what the action is and who does it, so that
+nobody waits for evidence that will never come.
+
+`checked` and `arrival` are optional, because the reader that validates a verdict
+can be an older release than the skill that asks for it.
 
 ## The commit
 

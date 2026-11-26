@@ -330,6 +330,9 @@
                       "observed",
                       "test"
                     ]
+                  },
+                  "checked": {
+                    "const": true
                   }
                 }
               }
@@ -369,6 +372,10 @@
           "description": "Where to find it: a command and its output, a run, a file and line.",
           "type": "string",
           "minLength": 1
+        },
+        "checked": {
+          "description": "Whether the one judging read or ran it in this evaluation. What was taken from an earlier verdict, a description or a comment and not looked at again is `false`, and cannot make a requirement met.",
+          "type": "boolean"
         }
       }
     },
@@ -425,8 +432,72 @@
           "description": "The threshold that decides it.",
           "type": "string",
           "minLength": 1
+        },
+        "arrival": {
+          "description": "`arrives`: the condition comes about by itself, such as a later run, a date or a count. `needs_action`: it never will unless someone does something, which `action` says.",
+          "enum": [
+            "arrives",
+            "needs_action"
+          ]
+        },
+        "action": {
+          "description": "What has to be done to produce the evidence, and who does it. Only with `needs_action`.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "do",
+            "who"
+          ],
+          "properties": {
+            "do": {
+              "description": "The action.",
+              "type": "string",
+              "minLength": 1
+            },
+            "who": {
+              "description": "Who does it: a person, a role or the runtime.",
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "arrival"
+            ],
+            "properties": {
+              "arrival": {
+                "const": "needs_action"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "action"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "arrival"
+            ],
+            "properties": {
+              "arrival": {
+                "const": "needs_action"
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

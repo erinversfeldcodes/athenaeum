@@ -1,0 +1,44 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "owed",
+  "decides": "person",
+  "decides_because": "a measurement is owed",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "The key no longer depends on the image",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "a run on main"
+      }
+    },
+    {
+      "text": "The hit rate after is no lower than before",
+      "settled_by": "evidence",
+      "status": "owed",
+      "gap": "needs a sample of runs after the merge"
+    }
+  ],
+  "goal": {
+    "status": "owed",
+    "why": "the hit rate cannot be known yet"
+  },
+  "owed": [
+    {
+      "what": "the cache hit rate after the change",
+      "run": "gh run list --workflow ci.yml --json databaseId",
+      "when": "after at least as many runs as the before sample",
+      "settled_by": "the rate is no lower than before",
+      "action": {
+        "do": "delete the caches and run CI again",
+        "who": "a maintainer"
+      }
+    }
+  ],
+  "not_filed": [],
+  "could_not_check": []
+}

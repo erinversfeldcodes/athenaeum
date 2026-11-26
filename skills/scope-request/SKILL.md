@@ -37,7 +37,25 @@ The conventions in [the skills README](../README.md) apply.
    for one person to review with care in one sitting. As a rule of thumb,
    that is more than about three hundred lines of production code. When it is
    too big, propose the smallest coherent first slice and list the rest as
-   work to follow. A split is linked
+   work to follow.
+
+   Then ask one more thing, whatever the size: does any part of this have to be
+   merged, deployed or released before another part can be built, checked or
+   reviewed by what runs today? The checks, the reviewers and the installed
+   tools are the ones already running, not the ones the change would produce.
+   For example: a new field in a schema or contract and its first use; a new
+   version of the tool that runs the checks and a check that needs it; a data
+   migration and the code that depends on it; a protocol change between two
+   parts that are released separately. If so, split there however small it is,
+   make the order a blocked-by link, and have the brief name what must be
+   rebuilt, deployed or released between the two. A change that holds both
+   halves fails before anyone can read it, and neither a retry nor a review gets
+   it through. A change that is only large, or whose parts all work with what
+   runs today, is not split for this reason: adding an optional field that
+   nothing reads yet, with the code that will read it in the same release, is
+   one piece when no running check has to understand the field first.
+
+   A split is linked
    in the tracker and not only mentioned in the text: the original is the
    parent, each piece is created as its sub-issue, and an order between pieces
    is a blocked-by link. A ticket with children is an epic. Say in the brief
