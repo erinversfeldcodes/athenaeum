@@ -1,0 +1,37 @@
+{
+  "schema_version": 0,
+  "ticket": 63,
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "verdict": "met",
+  "decides": "evidence",
+  "decides_because": "every requirement is settled by observed evidence and the ticket is not an epic",
+  "epic": false,
+  "requirements": [
+    {
+      "text": "The key no longer depends on the runner image",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "observed",
+        "where": "the key in the run on main has no environment hash",
+        "checked": false
+      }
+    },
+    {
+      "text": "A cold run finishes inside its limit",
+      "settled_by": "evidence",
+      "status": "met",
+      "evidence": {
+        "kind": "test",
+        "where": "run 44556367034, 14m02 of 15m"
+      }
+    }
+  ],
+  "goal": {
+    "status": "achieved",
+    "why": "the cache stopped missing for reasons the repository does not control"
+  },
+  "owed": [],
+  "not_filed": [],
+  "could_not_check": []
+}

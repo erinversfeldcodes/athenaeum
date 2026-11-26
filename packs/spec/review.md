@@ -25,11 +25,23 @@ change's own account of what it did.
   requirement with no proof, or with a proof that would pass without it, is not met.
   The requirements audit of the review skill lists them; this lens is where one that
   is missing, or only claimed, becomes a finding.
+- Every item of what the ticket calls done, and every proof it asks for, is judged on
+  every reading, one at a time, and each gets a line in `notes`: the item, whether it
+  is met, not met or cannot be met, and the evidence. Do not stop at the first one
+  that fails. A requirement left unjudged in one reading surfaces in a later one, and
+  costs another round of work that could have been done at once.
 - A table of proofs in the ticket is read row by row. A row with no evidence in the
   change is a finding naming the row.
 - A requirement that the change cannot meet, because it needs something that does not
   exist yet (a measurement that needs the change to have run, a decision a person has
   not made), is named as owed, with what produces it, and not left silent.
+- A requirement that no change could meet as written (it contradicts another, or asks
+  a test of behaviour that already works to fail before the change) is a question for
+  a person, because revising cannot answer it. Report it as a P2 finding that names
+  the requirement, shows why it cannot be met, and says what the person has to decide.
+  This holds only where the impossibility is shown: a requirement that is hard,
+  expensive or unclear is judged as any other. The description must name it too and
+  must not claim to close the ticket (axis 6); if it does either, that is the P1.
 
 ### 2. Scope (judgement)
 
@@ -37,6 +49,11 @@ change's own account of what it did.
   done. A refactor, a rename or a new dependency the ticket did not need is scope
   creep, and where it changes behaviour it is a finding.
 - A change smaller than the ticket asked for says so, and does not call itself complete.
+- A change that holds both a thing and a use of it that what runs today cannot
+  build, check or review until the first is merged, deployed or released (a new
+  contract field and its first use, a new tool version and a check that needs
+  it) is split, in that order. Where the description shows the running checks
+  can already read both halves, it is not.
 
 ### 3. A claim of cause (judgement)
 
@@ -91,10 +108,12 @@ A ticket is closed only when every item that affects it is resolved.
   cause stated as fact without evidence; a mitigation presented as a fix; a failure made
   to go away without the cause shown; a cited figure that cannot be reproduced; a
   promised measurement that is neither present nor named as owed; a pull request that
-  closes a ticket with an item still open; scope creep that changes behaviour.
+  closes a ticket with an item still open; scope creep that changes behaviour; a
+  change that combines two halves which must be released one before the other.
 - **P2**: work outside the scope that changes no behaviour; a before and after
   comparison with a smaller after sample that is not the basis of a claim; a figure that
-  does not say what it excludes.
+  does not say what it excludes; a requirement shown to be impossible as written, which
+  the description names and leaves open.
 - **P3**: a description that says less than it could.
 
 A P2 finding does not block unless the repository's manifest says this lens's P2
